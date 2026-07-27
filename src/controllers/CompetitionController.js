@@ -70,5 +70,26 @@ module.exports = () => {
     next();
   };
 
-  return { getDetails, getLeaderboard, getMine };
+  const join = async (req, res, next) => {
+    console.log("CompetitionController => join");
+    const { userId } = req.body;
+    const { competitionId } = req.params;
+
+    if (!competitionId) {
+      req.rCode = 0;
+      req.msg = "competition_id_required";
+      return next();
+    }
+
+    const data = await CompetitionService().joinCompetition(
+      competitionId,
+      userId,
+    );
+
+    req.rData = data;
+    req.msg = "competition_joined";
+    next();
+  };
+
+  return { getDetails, getLeaderboard, getMine, join };
 };

@@ -1,5 +1,6 @@
 const { Upload } = require("@aws-sdk/lib-storage");
-const { S3Client } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 require("dotenv").config();
 
@@ -85,6 +86,25 @@ async function uploadSingleFile(file) {
   return data.Location;
 }
 
+// Client uploads directly to S3 with this URL (PUT, matching contentType), avoiding a round trip through our server
+async function getPresignedUploadUrl({ fileName, contentType, folder }) {
+  const key = folder
+    ? `${folder}/${Date.now()}_${fileName}`
+    : `${Date.now()}_${fileName}`;
+
+  const command = new PutObjectCommand({
+    Bucket,
+    Key: key,
+    ContentType: contentType,
+  });
+
+  const uploadUrl = await getSignedUrl(s3Client, command, { expiresIn: 900 });
+  const fileUrl = `https://${Bucket}.s3.${Region}.amazonaws.com/${key}`;
+
+  return { uploadUrl, fileUrl, key };
+}
+
 module.exports = {
   uploadFileToAws,
+  getPresignedUploadUrl,
 };

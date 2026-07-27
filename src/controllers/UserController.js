@@ -1,4 +1,5 @@
 const UserService = require("../services/UserService");
+const FollowService = require("../services/FollowService");
 const fileUploadService = require("../util/s3");
 var ObjectId = require("mongoose").Types.ObjectId;
 
@@ -137,6 +138,18 @@ module.exports = () => {
     next();
   };
 
+  const follow = async (req, res, next) => {
+    console.log("UserController => follow");
+    const { userId } = req.body;
+    const { userId: targetUserId } = req.params;
+
+    const data = await FollowService().toggleFollow(userId, targetUserId);
+
+    req.rData = data;
+    req.msg = "follow_toggled";
+    next();
+  };
+
   return {
     /**
      * Auth
@@ -148,6 +161,7 @@ module.exports = () => {
     getAllUserList,
     getDetails,
     editUser,
+    follow,
 
     /**
      * Notification

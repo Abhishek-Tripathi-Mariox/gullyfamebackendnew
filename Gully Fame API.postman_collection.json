@@ -5175,6 +5175,367 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Audio Management",
+					"item": [
+						{
+							"name": "Create Audio",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"type": "text",
+											"value": "Track title"
+										},
+										{
+											"key": "artist",
+											"type": "text",
+											"value": "Artist name"
+										},
+										{
+											"key": "duration",
+											"type": "text",
+											"value": "30"
+										},
+										{
+											"key": "audio",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "coverImage",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/audio",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"audio"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Audio",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Updated title\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/audio/{{AUDIO_ID}}",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"audio",
+										"{{AUDIO_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Audio",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/audio/{{AUDIO_ID}}",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"audio",
+										"{{AUDIO_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Filters Management",
+					"item": [
+						{
+							"name": "Create Filter",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"type": "text",
+											"value": "Vintage"
+										},
+										{
+											"key": "asset",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "thumbnail",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/filters",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"filters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Filter",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Updated name\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/filters/{{FILTER_ID}}",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"filters",
+										"{{FILTER_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Filter",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/filters/{{FILTER_ID}}",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"filters",
+										"{{FILTER_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Stickers Management",
+					"item": [
+						{
+							"name": "Create Sticker",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"type": "text",
+											"value": "Fire"
+										},
+										{
+											"key": "category",
+											"type": "text",
+											"value": "reactions"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/stickers",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"stickers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Sticker",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Updated name\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/stickers/{{STICKER_ID}}",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"stickers",
+										"{{STICKER_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Sticker",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/stickers/{{STICKER_ID}}",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"stickers",
+										"{{STICKER_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -6623,7 +6984,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"emoji\": \"\ud83d\udc4d\"\n}",
+									"raw": "{\n    \"emoji\": \"\u1f44d\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -6650,7 +7011,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"emoji\": \"\ud83d\udc4d\"\n}",
+											"raw": "{\n    \"emoji\": \"\u1f44d\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -6674,7 +7035,7 @@
 									"_postman_previewlanguage": "json",
 									"header": null,
 									"cookie": [],
-									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": {\n        \"_id\": \"6971ebb1135da8ca6761a749\",\n        \"reactions\": [\n            {\n                \"user_id\": \"6970b9ba0a9b4205c65ab6c9\",\n                \"emoji\": \"\ud83d\udc4d\"\n            }\n        ]\n    }\n}"
+									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": {\n        \"_id\": \"6971ebb1135da8ca6761a749\",\n        \"reactions\": [\n            {\n                \"user_id\": \"6970b9ba0a9b4205c65ab6c9\",\n                \"emoji\": \"\u1f44d\"\n            }\n        ]\n    }\n}"
 								}
 							]
 						},
@@ -7087,6 +7448,34 @@
 									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": {\n        \"reels\": [\n            {\n                \"_id\": \"reel_001\",\n                \"video_url\": \"/videos/reel1.mp4\",\n                \"thumbnail_url\": \"/thumbs/reel1.jpg\",\n                \"caption\": \"My dance entry!\",\n                \"author\": {\n                    \"_id\": \"u1\",\n                    \"firstName\": \"Bryan\",\n                    \"lastName\": \"Wolf\",\n                    \"profileImage\": \"\",\n                    \"is_followed_by_me\": false\n                },\n                \"music\": {\n                    \"id\": \"m1\",\n                    \"name\": \"Beat Drop\"\n                },\n                \"stats\": {\n                    \"votes\": 450,\n                    \"likes\": 120,\n                    \"comments\": 30,\n                    \"shares\": 15,\n                    \"saves\": 8,\n                    \"tips\": 5\n                },\n                \"user_interactions\": {\n                    \"voted\": true,\n                    \"liked\": false,\n                    \"saved\": false\n                },\n                \"createdAt\": \"2026-01-21T10:00:00.000Z\"\n            }\n        ],\n        \"next_cursor\": \"reel_001\",\n        \"has_more\": true\n    }\n}"
 								}
 							]
+						},
+						{
+							"name": "Join Competition",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}competitions/{{COMPETITION_ID}}/join",
+									"host": [
+										"{{BASE_URL}}competitions"
+									],
+									"path": [
+										"{{COMPETITION_ID}}",
+										"join"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -7340,6 +7729,307 @@
 									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": {\n        \"action\": \"save\",\n        \"toggled\": true,\n        \"stats\": {\n            \"votes\": 451,\n            \"likes\": 121,\n            \"saves\": 9\n        }\n    }\n}"
 								}
 							]
+						},
+						{
+							"name": "Get Upload URL",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"fileName\": \"my_video.mp4\",\n  \"fileType\": \"video/mp4\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/upload-url",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"upload-url"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Publish Reel",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"video_url\": \"https://bank-ster-dev.s3.ap-south-1.amazonaws.com/reels/example.mp4\",\n  \"thumbnail_url\": \"\",\n  \"caption\": \"My reel\",\n  \"competitionId\": \"\",\n  \"music\": {\n    \"id\": \"\",\n    \"name\": \"\"\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/publish",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"publish"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Draft",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"video_url\": \"https://bank-ster-dev.s3.ap-south-1.amazonaws.com/reels/example.mp4\",\n  \"caption\": \"Work in progress\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/draft",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"draft"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Draft",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/draft",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"draft"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Auto Caption",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"videoUrl\": \"https://bank-ster-dev.s3.ap-south-1.amazonaws.com/reels/example.mp4\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/auto-caption",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"auto-caption"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Comment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"text\": \"Great reel!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/{{REEL_ID}}/comments",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"{{REEL_ID}}",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Comments",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/{{REEL_ID}}/comments",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"{{REEL_ID}}",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Comment",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/comments/{{COMMENT_ID}}",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"comments",
+										"{{COMMENT_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tip Creator",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amount\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/{{REEL_ID}}/tip",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"{{REEL_ID}}",
+										"tip"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -7676,6 +8366,249 @@
 							]
 						}
 					]
+				},
+				{
+					"name": "KYC",
+					"item": [
+						{
+							"name": "Submit KYC",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "docType",
+											"type": "text",
+											"value": "aadhaar"
+										},
+										{
+											"key": "frontImage",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "backImage",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/kyc",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"kyc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get My KYC",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/kyc",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"kyc"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Audio",
+					"item": [
+						{
+							"name": "Save/Unsave Audio",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/audio/{{AUDIO_ID}}/save",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"audio",
+										"{{AUDIO_ID}}",
+										"save"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Saved Audio",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/audio/saved",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"audio",
+										"saved"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Wallet",
+					"item": [
+						{
+							"name": "Get Wallet",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/wallet",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Recharge Wallet",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amount\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/wallet/recharge",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"wallet",
+										"recharge"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Follow",
+					"item": [
+						{
+							"name": "Toggle Follow",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/{{TARGET_USER_ID}}/follow",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"{{TARGET_USER_ID}}",
+										"follow"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -7840,7 +8773,133 @@
 							"name": "Term and Conditions",
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}public/termAndCondition",
+									"host": [
+										"{{BASE_URL}}public"
+									],
+									"path": [
+										"termAndCondition"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "About Us",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}public/aboutUs",
+									"host": [
+										"{{BASE_URL}}public"
+									],
+									"path": [
+										"aboutUs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Privacy Policy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}public/privacyPolicy",
+									"host": [
+										"{{BASE_URL}}public"
+									],
+									"path": [
+										"privacyPolicy"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Competition Rules",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}public/competitionRules",
+									"host": [
+										"{{BASE_URL}}public"
+									],
+									"path": [
+										"competitionRules"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Audio",
+					"item": [
+						{
+							"name": "List Audio",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}public/audio?sort=trending",
+									"host": [
+										"{{BASE_URL}}public"
+									],
+									"path": [
+										"audio?sort=trending"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Filters",
+					"item": [
+						{
+							"name": "List Filters",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}public/filters",
+									"host": [
+										"{{BASE_URL}}public"
+									],
+									"path": [
+										"filters"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Stickers",
+					"item": [
+						{
+							"name": "List Stickers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}public/stickers",
+									"host": [
+										"{{BASE_URL}}public"
+									],
+									"path": [
+										"stickers"
+									]
+								}
 							},
 							"response": []
 						}

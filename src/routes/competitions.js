@@ -37,4 +37,14 @@ competitionRouter.get(
   ResponseMiddleware,
 );
 
+/**
+ * POST /competitions/:competitionId/join - Join a competition (adds caller to participants)
+ */
+competitionRouter.post(
+  "/:competitionId/join",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(CompetitionController().join),
+  ResponseMiddleware,
+);
+
 module.exports = competitionRouter;

@@ -4,6 +4,9 @@ const HomeScreenController = require("../controllers/HomeScreenController");
 const CategoryController = require("../controllers/CategoryController");
 const ChampionController = require("../controllers/ChampionController");
 const CompetitionController = require("../controllers/CompetitionController");
+const KYCController = require("../controllers/KYCController");
+const AudioController = require("../controllers/AudioController");
+const WalletController = require("../controllers/WalletController");
 const ErrorHandlerMiddleware = require("../middlewares/ErrorHandlerMiddleware");
 const ResponseMiddleware = require("../middlewares/ResponseMiddleware");
 const AuthMiddleware = require("../middlewares/AuthMiddleware");
@@ -90,6 +93,67 @@ userRouter.get(
   "/competitions",
   AuthMiddleware().verifyUserToken,
   ErrorHandlerMiddleware(CompetitionController().getMine),
+  ResponseMiddleware,
+);
+
+/**
+ * KYC
+ */
+userRouter.post(
+  "/kyc",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(KYCController().submitKYC),
+  ResponseMiddleware,
+);
+
+userRouter.get(
+  "/kyc",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(KYCController().getMyKYC),
+  ResponseMiddleware,
+);
+
+/**
+ * Audio library — save/unsave (toggle) + saved list
+ */
+userRouter.post(
+  "/audio/:audioId/save",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(AudioController().saveToggle),
+  ResponseMiddleware,
+);
+
+userRouter.get(
+  "/audio/saved",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(AudioController().getSaved),
+  ResponseMiddleware,
+);
+
+/**
+ * Follow / unfollow (toggle)
+ */
+userRouter.post(
+  "/:userId/follow",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(UserController().follow),
+  ResponseMiddleware,
+);
+
+/**
+ * Wallet
+ */
+userRouter.get(
+  "/wallet",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(WalletController().getWallet),
+  ResponseMiddleware,
+);
+
+userRouter.post(
+  "/wallet/recharge",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(WalletController().recharge),
   ResponseMiddleware,
 );
 

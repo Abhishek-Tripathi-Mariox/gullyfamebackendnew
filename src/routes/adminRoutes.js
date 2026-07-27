@@ -7,6 +7,10 @@ const AdminValidator = require("../validators/AdminValidator");
 const CategoryController = require("../controllers/CategoryController");
 const UserController = require("../controllers/UserController");
 const HomeScreenController = require("../controllers/HomeScreenController");
+const KYCController = require("../controllers/KYCController");
+const AudioController = require("../controllers/AudioController");
+const FilterController = require("../controllers/FilterController");
+const StickerController = require("../controllers/StickerController");
 
 adminRouter.post(
   "/register",
@@ -241,6 +245,99 @@ adminRouter.post(
   "/competitionRules",
   AuthMiddleware().verifyAdminToken,
   ErrorHandlerMiddleware(AdminController().addCompetitionRules),
+  ResponseMiddleware
+);
+
+/**
+ * KYC review
+ */
+
+adminRouter.get(
+  "/users/:id/kyc",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(KYCController().getUserKYC),
+  ResponseMiddleware
+);
+
+adminRouter.put(
+  "/users/:id/kyc",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(KYCController().updateUserKYC),
+  ResponseMiddleware
+);
+
+/**
+ * Audio library management
+ */
+
+adminRouter.post(
+  "/audio",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(AudioController().create),
+  ResponseMiddleware
+);
+
+adminRouter.put(
+  "/audio/:id",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(AudioController().update),
+  ResponseMiddleware
+);
+
+adminRouter.delete(
+  "/audio/:id",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(AudioController().delete),
+  ResponseMiddleware
+);
+
+/**
+ * Filters management
+ */
+
+adminRouter.post(
+  "/filters",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(FilterController().create),
+  ResponseMiddleware
+);
+
+adminRouter.put(
+  "/filters/:id",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(FilterController().update),
+  ResponseMiddleware
+);
+
+adminRouter.delete(
+  "/filters/:id",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(FilterController().delete),
+  ResponseMiddleware
+);
+
+/**
+ * Stickers management
+ */
+
+adminRouter.post(
+  "/stickers",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(StickerController().create),
+  ResponseMiddleware
+);
+
+adminRouter.put(
+  "/stickers/:id",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(StickerController().update),
+  ResponseMiddleware
+);
+
+adminRouter.delete(
+  "/stickers/:id",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(StickerController().delete),
   ResponseMiddleware
 );
 

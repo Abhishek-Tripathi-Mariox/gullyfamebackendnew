@@ -327,10 +327,41 @@ module.exports = () => {
     };
   };
 
+  const joinCompetition = async (competitionId, userId) => {
+    const competition = await getCompetitionById(competitionId);
+    if (!competition) {
+      throw new Error("competition_not_found");
+    }
+
+    const normalizedStatus = mapStatus(competition.status);
+    if (normalizedStatus !== "UPCOMING" && normalizedStatus !== "LIVE") {
+      throw new Error("competition_not_joinable");
+    }
+
+    const alreadyJoined = competition.participants.some(
+      (p) => p.toString() === userId.toString(),
+    );
+    if (alreadyJoined) {
+      throw new Error("already_joined");
+    }
+
+    const updated = await Competition.findByIdAndUpdate(
+      competitionId,
+      { $addToSet: { participants: userId } },
+      { new: true },
+    ).lean();
+
+    return {
+      competitionId,
+      participantsCount: updated.participants.length,
+    };
+  };
+
   return {
     getCompetitionById,
     getCompetitionDetails,
     getLeaderboard,
     getMyCompetitions,
+    joinCompetition,
   };
 };

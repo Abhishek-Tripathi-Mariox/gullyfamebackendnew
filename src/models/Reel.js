@@ -30,6 +30,15 @@ const ReelSchema = new Schema(
       id: { type: String, default: "" },
       name: { type: String, default: "" },
     },
+    status: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "draft",
+    },
+    publishedAt: {
+      type: Date,
+      default: null,
+    },
     stats: {
       votes: { type: Number, default: 0 },
       likes: { type: Number, default: 0 },

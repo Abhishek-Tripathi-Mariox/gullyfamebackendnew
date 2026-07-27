@@ -2,6 +2,7 @@ const Reel = require("../models/Reel");
 const ReelInteraction = require("../models/ReelInteraction");
 const Competition = require("../models/Competition");
 const Follow = require("../models/Follow");
+const AudioService = require("./AudioService");
 const mongoose = require("mongoose");
 
 module.exports = () => {
@@ -85,6 +86,7 @@ module.exports = () => {
           competition: comp._id,
           isActive: true,
           isDeleted: { $ne: true },
+          status: { $ne: "draft" },
         })
           .sort({ "stats.votes": -1 })
           .limit(3)
@@ -95,6 +97,7 @@ module.exports = () => {
           competition: comp._id,
           isActive: true,
           isDeleted: { $ne: true },
+          status: { $ne: "draft" },
         });
 
         const initialReels = await Promise.all(
@@ -124,6 +127,7 @@ module.exports = () => {
       competition: new mongoose.Types.ObjectId(competitionId),
       isActive: true,
       isDeleted: { $ne: true },
+      status: { $ne: "draft" },
     };
 
     if (cursor) {
@@ -263,6 +267,7 @@ module.exports = () => {
     const query = {
       isActive: true,
       isDeleted: { $ne: true },
+      status: { $ne: "draft" },
     };
 
     if (cursor) {
@@ -298,10 +303,99 @@ module.exports = () => {
     };
   };
 
+  const createDraftReel = async (authorId, data) => {
+    return Reel.create({
+      ...data,
+      author: authorId,
+      status: "draft",
+    });
+  };
+
+  const updateDraft = async (reelId, authorId, data) => {
+    const draft = await Reel.findOne({
+      _id: reelId,
+      author: authorId,
+      status: "draft",
+      isDeleted: { $ne: true },
+    });
+    if (!draft) return null;
+
+    if (data.video_url !== undefined) draft.video_url = data.video_url;
+    if (data.thumbnail_url !== undefined)
+      draft.thumbnail_url = data.thumbnail_url;
+    if (data.caption !== undefined) draft.caption = data.caption;
+    if (data.competition !== undefined) draft.competition = data.competition;
+    if (data.music !== undefined) draft.music = data.music;
+
+    await draft.save();
+    return draft;
+  };
+
+  const getDraftForUser = async (authorId) => {
+    return Reel.findOne({
+      author: authorId,
+      status: "draft",
+      isDeleted: { $ne: true },
+    })
+      .sort({ updatedAt: -1 })
+      .lean();
+  };
+
+  const publishReel = async (reelId, authorId, data) => {
+    if (!data.video_url) {
+      throw new Error("video_url_required");
+    }
+
+    if (data.competition) {
+      const competition = await Competition.findOne({
+        _id: data.competition,
+        isDeleted: { $ne: true },
+      }).lean();
+      if (!competition) {
+        throw new Error("competition_not_found");
+      }
+    }
+
+    const update = {
+      video_url: data.video_url,
+      thumbnail_url: data.thumbnail_url || "",
+      caption: data.caption || "",
+      competition: data.competition || null,
+      music: data.music || { id: "", name: "" },
+      status: "published",
+      publishedAt: new Date(),
+    };
+
+    let reel;
+    if (reelId) {
+      reel = await Reel.findOne({ _id: reelId, isDeleted: { $ne: true } });
+      if (!reel) {
+        throw new Error("reel_draft_not_found");
+      }
+      if (reel.author.toString() !== authorId.toString()) {
+        throw new Error("forbidden");
+      }
+      Object.assign(reel, update);
+      await reel.save();
+    } else {
+      reel = await Reel.create({ ...update, author: authorId });
+    }
+
+    if (update.music && update.music.id) {
+      await AudioService().incrementUsage(update.music.id);
+    }
+
+    return reel;
+  };
+
   return {
     getMatrix,
     getCompetitionReels,
     toggleAction,
     listReels,
+    createDraftReel,
+    updateDraft,
+    getDraftForUser,
+    publishReel,
   };
 };
