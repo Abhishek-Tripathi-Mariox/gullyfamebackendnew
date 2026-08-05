@@ -47,4 +47,15 @@ competitionRouter.post(
   ResponseMiddleware,
 );
 
+/**
+ * POST /competitions/:competitionId/invite - Challenge another user to enter
+ * Body: toUserId
+ */
+competitionRouter.post(
+  "/:competitionId/invite",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(CompetitionController().invite),
+  ResponseMiddleware,
+);
+
 module.exports = competitionRouter;

@@ -1,6 +1,8 @@
 const Wallet = require("../models/Wallet");
 const Transaction = require("../models/Transaction");
 const Reel = require("../models/Reel");
+const GamificationService = require("./GamificationService");
+const NotificationTriggerService = require("./NotificationTriggerService");
 const mongoose = require("mongoose");
 
 module.exports = () => {
@@ -101,15 +103,17 @@ module.exports = () => {
       throw new Error("cannot_tip_self");
     }
 
+    let remainingBalance;
     const session = await mongoose.startSession();
     try {
       await session.withTransaction(async () => {
-        await debit(
+        const senderWallet = await debit(
           fromUserId,
           amount,
           { type: "TIP_SENT", relatedReel: reelId, relatedUser: toUserId },
           session,
         );
+        remainingBalance = senderWallet.balance;
 
         await credit(
           toUserId,
@@ -128,7 +132,16 @@ module.exports = () => {
       await session.endSession();
     }
 
-    return { tipped: amount };
+    // Best-effort side effects — the money movement above already committed,
+    // these just enrich the experience and shouldn't roll back the tip.
+    NotificationTriggerService()
+      .supportReceived(toUserId, { fromUserId, amount, reelId })
+      .catch((e) => console.log("supportReceived error", e.message));
+    GamificationService()
+      .addXp(toUserId, Math.min(amount, 100), "support_received")
+      .catch((e) => console.log("addXp(support) error", e.message));
+
+    return { tipped: amount, remainingBalance };
   };
 
   return { getOrCreateWallet, credit, debit, listTransactions, tip };

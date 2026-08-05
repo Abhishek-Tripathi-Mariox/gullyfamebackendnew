@@ -11,6 +11,7 @@ const KYCController = require("../controllers/KYCController");
 const AudioController = require("../controllers/AudioController");
 const FilterController = require("../controllers/FilterController");
 const StickerController = require("../controllers/StickerController");
+const SoundFxController = require("../controllers/SoundFxController");
 
 adminRouter.post(
   "/register",
@@ -338,6 +339,31 @@ adminRouter.delete(
   "/stickers/:id",
   AuthMiddleware().verifyAdminToken,
   ErrorHandlerMiddleware(StickerController().delete),
+  ResponseMiddleware
+);
+
+/**
+ * Sound FX management
+ */
+
+adminRouter.post(
+  "/soundfx",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(SoundFxController().create),
+  ResponseMiddleware
+);
+
+adminRouter.put(
+  "/soundfx/:id",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(SoundFxController().update),
+  ResponseMiddleware
+);
+
+adminRouter.delete(
+  "/soundfx/:id",
+  AuthMiddleware().verifyAdminToken,
+  ErrorHandlerMiddleware(SoundFxController().delete),
   ResponseMiddleware
 );
 

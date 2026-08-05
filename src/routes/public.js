@@ -3,6 +3,7 @@ const LogoController = require("../controllers/LogoController");
 const AudioController = require("../controllers/AudioController");
 const FilterController = require("../controllers/FilterController");
 const StickerController = require("../controllers/StickerController");
+const SoundFxController = require("../controllers/SoundFxController");
 const PublicContentController = require("../controllers/PublicContentController");
 const ErrorHandlerMiddleware = require("../middlewares/ErrorHandlerMiddleware");
 const ResponseMiddleware = require("../middlewares/ResponseMiddleware");
@@ -46,6 +47,12 @@ userRouter.get(
 userRouter.get(
   "/stickers",
   ErrorHandlerMiddleware(StickerController().list),
+  ResponseMiddleware
+);
+
+userRouter.get(
+  "/soundfx",
+  ErrorHandlerMiddleware(SoundFxController().list),
   ResponseMiddleware
 );
 

@@ -102,6 +102,24 @@ reelRouter.delete(
 );
 
 /**
+ * POST /reels/:reelId/export - Start a server-side render fallback
+ * GET /reels/:reelId/export/status - Poll for completion
+ */
+reelRouter.post(
+  "/:reelId/export",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(ReelController().startExport),
+  ResponseMiddleware,
+);
+
+reelRouter.get(
+  "/:reelId/export/status",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(ReelController().getExportStatus),
+  ResponseMiddleware,
+);
+
+/**
  * POST /reels/:reelId/tip - Tip the reel's creator from the caller's wallet
  */
 reelRouter.post(

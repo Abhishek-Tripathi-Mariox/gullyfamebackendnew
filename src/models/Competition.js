@@ -76,6 +76,11 @@ const CompetitionSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    // Set once the "starting soon" push/notification has fired, so the scheduler doesn't re-alert
+    upcomingAlertSent: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

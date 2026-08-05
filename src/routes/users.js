@@ -7,6 +7,7 @@ const CompetitionController = require("../controllers/CompetitionController");
 const KYCController = require("../controllers/KYCController");
 const AudioController = require("../controllers/AudioController");
 const WalletController = require("../controllers/WalletController");
+const GamificationController = require("../controllers/GamificationController");
 const ErrorHandlerMiddleware = require("../middlewares/ErrorHandlerMiddleware");
 const ResponseMiddleware = require("../middlewares/ResponseMiddleware");
 const AuthMiddleware = require("../middlewares/AuthMiddleware");
@@ -154,6 +155,23 @@ userRouter.post(
   "/wallet/recharge",
   AuthMiddleware().verifyUserToken,
   ErrorHandlerMiddleware(WalletController().recharge),
+  ResponseMiddleware,
+);
+
+/**
+ * Gamification — XP/level/streak + the "Vote on 5 videos" daily mission
+ */
+userRouter.get(
+  "/progress",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(GamificationController().getProgress),
+  ResponseMiddleware,
+);
+
+userRouter.get(
+  "/daily-mission",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(GamificationController().getDailyMission),
   ResponseMiddleware,
 );
 

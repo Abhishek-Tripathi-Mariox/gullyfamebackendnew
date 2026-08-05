@@ -91,5 +91,33 @@ module.exports = () => {
     next();
   };
 
-  return { getDetails, getLeaderboard, getMine, join };
+  const invite = async (req, res, next) => {
+    console.log("CompetitionController => invite");
+    const { userId, toUserId } = req.body;
+    const { competitionId } = req.params;
+
+    if (!competitionId) {
+      req.rCode = 0;
+      req.msg = "competition_id_required";
+      return next();
+    }
+
+    if (!toUserId) {
+      req.rCode = 0;
+      req.msg = "to_user_id_required";
+      return next();
+    }
+
+    const data = await CompetitionService().inviteToCompetition(
+      competitionId,
+      userId,
+      toUserId,
+    );
+
+    req.rData = data;
+    req.msg = "success";
+    next();
+  };
+
+  return { getDetails, getLeaderboard, getMine, join, invite };
 };

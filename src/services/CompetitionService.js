@@ -3,6 +3,7 @@ const Reel = require("../models/Reel");
 const ReelInteraction = require("../models/ReelInteraction");
 const Follow = require("../models/Follow");
 const User = require("../models/User");
+const NotificationTriggerService = require("./NotificationTriggerService");
 const mongoose = require("mongoose");
 
 module.exports = () => {
@@ -357,11 +358,42 @@ module.exports = () => {
     };
   };
 
+  // "New Rap Battle Invite" — a user calling out another user to a
+  // competition. Kept lightweight (just fires a notification) rather than
+  // a full accept/decline model, matching what the mockup shows.
+  const inviteToCompetition = async (competitionId, fromUserId, toUserId) => {
+    if (fromUserId.toString() === toUserId.toString()) {
+      throw new Error("cannot_invite_self");
+    }
+
+    const competition = await getCompetitionById(competitionId);
+    if (!competition) {
+      throw new Error("competition_not_found");
+    }
+
+    const toUser = await User.findOne({
+      _id: toUserId,
+      isActive: true,
+      isDeleted: { $ne: true },
+    }).lean();
+    if (!toUser) {
+      throw new Error("user_not_found");
+    }
+
+    await NotificationTriggerService().rapBattleInvite(toUserId, {
+      competitionId,
+      fromUserId,
+    });
+
+    return { competitionId, toUserId, invited: true };
+  };
+
   return {
     getCompetitionById,
     getCompetitionDetails,
     getLeaderboard,
     getMyCompetitions,
     joinCompetition,
+    inviteToCompetition,
   };
 };

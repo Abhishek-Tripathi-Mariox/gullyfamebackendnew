@@ -1,9 +1,14 @@
 const Chat = require("../models/Chat");
+const ChatArchive = require("../models/ChatArchive");
 const mongoose = require("mongoose");
 
 module.exports = () => {
-  const getChatList = async (userId) => {
+  const getChatList = async (userId, view = "all") => {
     const objectUserId = new mongoose.Types.ObjectId(userId);
+
+    const archivedChatterIds = (
+      await ChatArchive.find({ user: objectUserId }).select("chatter").lean()
+    ).map((a) => a.chatter);
 
     const chatlist = await Chat.aggregate([
       {
@@ -41,7 +46,29 @@ module.exports = () => {
       },
     ]);
 
-    return chatlist;
+    const archivedSet = new Set(archivedChatterIds.map((id) => id.toString()));
+    const withArchiveFlag = chatlist.map((c) => ({
+      ...c,
+      archived: archivedSet.has(c.chatter_user_id.toString()),
+    }));
+
+    if (view === "archived") {
+      return withArchiveFlag.filter((c) => c.archived);
+    }
+    return withArchiveFlag.filter((c) => !c.archived);
+  };
+
+  const setArchived = async (userId, chatterId, archived) => {
+    if (archived) {
+      await ChatArchive.updateOne(
+        { user: userId, chatter: chatterId },
+        { user: userId, chatter: chatterId },
+        { upsert: true },
+      );
+    } else {
+      await ChatArchive.deleteOne({ user: userId, chatter: chatterId });
+    }
+    return { chatterId, archived };
   };
 
   const getChatDetails = async (userId, chatterId, page, limit) => {
@@ -168,6 +195,7 @@ module.exports = () => {
 
   return {
     getChatList,
+    setArchived,
     getChatDetails,
     sendMessage,
     toggleReaction,

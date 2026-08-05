@@ -1,13 +1,36 @@
 const ChatService = require("../services/ChatService");
+const socket = require("../util/socket");
 
 module.exports = () => {
   const chatList = async (req, res, next) => {
     console.log("ChatController => chatList");
     const { userId } = req.body;
+    const view = req.query.view === "archived" ? "archived" : "all";
 
-    const chatlist = await ChatService().getChatList(userId);
+    const chatlist = await ChatService().getChatList(userId, view);
 
     req.rData = { chatlist };
+    req.msg = "success";
+    next();
+  };
+
+  const archiveToggle = async (req, res, next) => {
+    console.log("ChatController => archiveToggle");
+    const { userId, chatterId, archived } = req.body;
+
+    if (!chatterId) {
+      req.rCode = 0;
+      req.msg = "chatter_id_required_for_archive";
+      return next();
+    }
+
+    const data = await ChatService().setArchived(
+      userId,
+      chatterId,
+      archived !== false,
+    );
+
+    req.rData = data;
     req.msg = "success";
     next();
   };
@@ -62,22 +85,24 @@ module.exports = () => {
 
     const savedMessage = await ChatService().sendMessage(chatData);
 
-    req.rData = {
-      message: {
-        _id: savedMessage._id,
-        sender_id: savedMessage.sender_id,
-        receiver_id: savedMessage.receiver_id,
-        message: savedMessage.message,
-        createdAt: savedMessage.createdAt,
-        updatedAt: null,
-        is_deleted: false,
-        is_forwarded: savedMessage.is_forwarded,
-        reply_to: savedMessage.reply_to,
-        reactions: [],
-        is_read: false,
-        read_at: null,
-      },
+    const messagePayload = {
+      _id: savedMessage._id,
+      sender_id: savedMessage.sender_id,
+      receiver_id: savedMessage.receiver_id,
+      message: savedMessage.message,
+      createdAt: savedMessage.createdAt,
+      updatedAt: null,
+      is_deleted: false,
+      is_forwarded: savedMessage.is_forwarded,
+      reply_to: savedMessage.reply_to,
+      reactions: [],
+      is_read: false,
+      read_at: null,
     };
+
+    socket.emitToUser(receiver_id, "new_message", messagePayload);
+
+    req.rData = { message: messagePayload };
     req.msg = "success";
     next();
   };
@@ -153,6 +178,7 @@ module.exports = () => {
 
   return {
     chatList,
+    archiveToggle,
     chatDetails,
     sendChat,
     toggleReact,

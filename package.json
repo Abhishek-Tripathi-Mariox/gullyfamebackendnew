@@ -19,12 +19,14 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-fileupload": "^1.5.2",
+    "firebase-admin": "^13.10.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^9.0.0",
     "node-input-validator": "^4.5.1",
     "redis": "^5.10.0",
     "regex-escape": "^3.4.11",
     "sharp": "^0.34.5",
+    "socket.io": "^4.8.3",
     "uuid": "^13.0.0"
   },
   "devDependencies": {

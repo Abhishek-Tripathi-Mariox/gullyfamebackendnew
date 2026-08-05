@@ -3,6 +3,9 @@ const ReelInteraction = require("../models/ReelInteraction");
 const Competition = require("../models/Competition");
 const Follow = require("../models/Follow");
 const AudioService = require("./AudioService");
+const DailyMissionService = require("./DailyMissionService");
+const GamificationService = require("./GamificationService");
+const NotificationTriggerService = require("./NotificationTriggerService");
 const mongoose = require("mongoose");
 
 module.exports = () => {
@@ -214,6 +217,24 @@ module.exports = () => {
           { $inc: { [`stats.${statsField}`]: 1 } },
         );
       }
+
+      if (actionType === "vote") {
+        // Daily "Vote on 5 videos" mission progress for the voter, small XP
+        // for participating, and a milestone nudge for the reel's author.
+        DailyMissionService()
+          .registerVote(userId)
+          .catch((e) => console.log("registerVote error", e.message));
+        GamificationService()
+          .addXp(userId, 5, "vote_cast")
+          .catch((e) => console.log("addXp(vote) error", e.message));
+
+        const updatedVotes = reel.stats.votes + 1;
+        if (updatedVotes % 50 === 0) {
+          NotificationTriggerService()
+            .rankBoost(reel.author)
+            .catch((e) => console.log("rankBoost error", e.message));
+        }
+      }
     }
 
     // Fetch updated reel
@@ -326,6 +347,11 @@ module.exports = () => {
     if (data.caption !== undefined) draft.caption = data.caption;
     if (data.competition !== undefined) draft.competition = data.competition;
     if (data.music !== undefined) draft.music = data.music;
+    // Editor layers — lets the client resume an in-progress edit exactly
+    // where it left off (filters, adjustments, stickers, overlays, timeline).
+    if (data.editState !== undefined) draft.editState = data.editState;
+    if (data.voiceOver !== undefined) draft.voiceOver = data.voiceOver;
+    if (data.ctaLink !== undefined) draft.ctaLink = data.ctaLink;
 
     await draft.save();
     return draft;
@@ -365,6 +391,9 @@ module.exports = () => {
       status: "published",
       publishedAt: new Date(),
     };
+    if (data.editState !== undefined) update.editState = data.editState;
+    if (data.voiceOver !== undefined) update.voiceOver = data.voiceOver;
+    if (data.ctaLink !== undefined) update.ctaLink = data.ctaLink;
 
     let reel;
     if (reelId) {
@@ -384,6 +413,10 @@ module.exports = () => {
     if (update.music && update.music.id) {
       await AudioService().incrementUsage(update.music.id);
     }
+
+    GamificationService()
+      .addXp(authorId, 50, "reel_published")
+      .catch((e) => console.log("addXp(publish) error", e.message));
 
     return reel;
   };

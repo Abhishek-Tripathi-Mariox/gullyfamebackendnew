@@ -1,4 +1,5 @@
 const express = require("express");
+const http = require("http");
 require("dotenv").config();
 const PORT = process.env.PORT || 9110;
 const app = express();
@@ -40,7 +41,17 @@ app.use((req, res) => {
   res.status(404).json({ error: "Not found", path: req.originalUrl });
 });
 
+// Wrapping in a plain http.Server (instead of app.listen) so Socket.IO can
+// attach to the same port for real-time chat delivery.
+const server = http.createServer(app);
+
+const socket = require("./src/util/socket");
+socket.initSocket(server);
+
+const scheduler = require("./src/util/scheduler");
+scheduler.start();
+
 // ✅ Start the server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("service listening on port " + PORT);
 });

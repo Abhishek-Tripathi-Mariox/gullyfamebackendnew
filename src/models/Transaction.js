@@ -10,7 +10,7 @@ const TransactionSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ["RECHARGE", "TIP_SENT", "TIP_RECEIVED"],
+      enum: ["RECHARGE", "TIP_SENT", "TIP_RECEIVED", "MISSION_REWARD"],
       required: true,
     },
     amount: {

@@ -105,6 +105,28 @@ const UserSchema = new Schema(
       enum: ["android", "ios", "web", ""],
       default: "",
     },
+
+    // Gamification
+    xp: {
+      type: Number,
+      default: 0,
+    },
+    level: {
+      type: Number,
+      default: 1,
+    },
+    streakCount: {
+      type: Number,
+      default: 0,
+    },
+    lastActiveDate: {
+      type: String, // YYYY-MM-DD, compared as plain strings to avoid TZ drift
+      default: "",
+    },
+    lastProfileNudgeAt: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true },
 );

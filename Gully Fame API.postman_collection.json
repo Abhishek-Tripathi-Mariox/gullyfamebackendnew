@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "1fffa0c5-3bcc-48cd-9440-86f53619cd84",
 		"name": "Gully Fame API",
-		"description": "Complete API collection for Gully Fame \u2014 includes Admin, User (App), and Public endpoints.\n\nImport the companion environment file and set BASE_URL to point at the target server.\n\n- **Admin APIs**: back-office / admin panel endpoints (require ADMIN_TOKEN)\n- **User APIs**: mobile/app-facing endpoints (require USER_TOKEN)\n- **Public APIs**: unauthenticated endpoints",
+		"description": "Complete API collection for Gully Fame — includes Admin, User (App), and Public endpoints.\n\nImport the companion environment file and set BASE_URL to point at the target server.\n\n- **Admin APIs**: back-office / admin panel endpoints (require ADMIN_TOKEN)\n- **User APIs**: mobile/app-facing endpoints (require USER_TOKEN)\n- **Public APIs**: unauthenticated endpoints",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -1938,7 +1938,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 1,\n    \"message\": \"Recent activity fetched successfully\",\n    \"data\": {\n        \"newUsers\": [\n            {\n                \"_id\": \"6943d601bc3abd1f94e9c626\",\n                \"firstName\": \"Shhsgd\",\n                \"lastName\": \"Ehhzshsh\",\n                \"email\": \"ahxhsjbddjj\",\n                \"createdAt\": \"2025-12-18T10:22:57.122Z\"\n            },\n            {\n                \"_id\": \"693182304113c2ac1fdda7c3\",\n                \"firstName\": \"Avine\",\n                \"lastName\": \"Jangid\",\n                \"email\": \"avinesh.20cse@bmu.edu.in\",\n                \"createdAt\": \"2025-12-04T12:44:32.559Z\"\n            },\n            {\n                \"_id\": \"693174244113c2ac1fdda6a3\",\n                \"firstName\": \"Anu\",\n                \"lastName\": \"Kumar\",\n                \"email\": \"anuku@gmail.com\",\n                \"createdAt\": \"2025-12-04T11:44:36.470Z\"\n            },\n            {\n                \"_id\": \"693173bc4113c2ac1fdda69d\",\n                \"firstName\": \"Anu\",\n                \"lastName\": \"Sharma\",\n                \"email\": \"anu@gmail.com\",\n                \"createdAt\": \"2025-12-04T11:42:52.090Z\"\n            },\n            {\n                \"_id\": \"6931732d4113c2ac1fdda697\",\n                \"firstName\": \"Krit\",\n                \"lastName\": \"Kapoor\",\n                \"email\": \"krit@gmail.com\",\n                \"createdAt\": \"2025-12-04T11:40:29.594Z\"\n            }\n        ],\n        \"latestCompetitions\": [\n            {\n                \"_id\": \"6960149d1cc9015db35d4a70\",\n                \"title\": \"Dance Battle 4\",\n                \"startDate\": \"2026-02-01T00:00:00.000Z\",\n                \"endDate\": \"2026-02-05T00:00:00.000Z\",\n                \"status\": \"COMPLETED\",\n                \"createdAt\": \"2026-01-08T20:33:33.797Z\"\n            },\n            {\n                \"_id\": \"696012b92c3d259129dfac94\",\n                \"title\": \"Dance Battle 3\",\n                \"startDate\": \"2026-02-01T00:00:00.000Z\",\n                \"endDate\": \"2026-02-05T00:00:00.000Z\",\n                \"status\": \"APPROVED\",\n                \"createdAt\": \"2026-01-08T20:25:29.287Z\"\n            },\n            {\n                \"_id\": \"69600f8d2c3d259129dfac88\",\n                \"title\": \"Dance Battle 2\",\n                \"startDate\": \"2026-02-01T00:00:00.000Z\",\n                \"endDate\": \"2026-02-05T00:00:00.000Z\",\n                \"status\": \"CANCELLED\",\n                \"createdAt\": \"2026-01-08T20:11:57.571Z\"\n            },\n            {\n                \"_id\": \"696002e12c3d259129dfac83\",\n                \"title\": \"Dance Battle\",\n                \"startDate\": \"2026-02-01T00:00:00.000Z\",\n                \"endDate\": \"2026-02-05T00:00:00.000Z\",\n                \"status\": \"APPROVED\",\n                \"createdAt\": \"2026-01-08T19:17:53.772Z\"\n            },\n            {\n                \"_id\": \"695e50dec362d05f363af91c\",\n                \"title\": \"Street Dance Battle \u2013 Updated\",\n                \"startDate\": \"2026-01-20T00:00:00.000Z\",\n                \"endDate\": \"2026-01-25T00:00:00.000Z\",\n                \"status\": \"CREATED\",\n                \"createdAt\": \"2026-01-07T12:26:06.147Z\"\n            }\n        ],\n        \"contestJoined\": [],\n        \"totalCompleted\": 1,\n        \"newCompetitionHeld\": {\n            \"_id\": \"696012b92c3d259129dfac94\",\n            \"title\": \"Dance Battle 3\",\n            \"status\": \"APPROVED\",\n            \"createdAt\": \"2026-01-08T20:25:29.287Z\"\n        }\n    }\n}"
+									"body": "{\n    \"code\": 1,\n    \"message\": \"Recent activity fetched successfully\",\n    \"data\": {\n        \"newUsers\": [\n            {\n                \"_id\": \"6943d601bc3abd1f94e9c626\",\n                \"firstName\": \"Shhsgd\",\n                \"lastName\": \"Ehhzshsh\",\n                \"email\": \"ahxhsjbddjj\",\n                \"createdAt\": \"2025-12-18T10:22:57.122Z\"\n            },\n            {\n                \"_id\": \"693182304113c2ac1fdda7c3\",\n                \"firstName\": \"Avine\",\n                \"lastName\": \"Jangid\",\n                \"email\": \"avinesh.20cse@bmu.edu.in\",\n                \"createdAt\": \"2025-12-04T12:44:32.559Z\"\n            },\n            {\n                \"_id\": \"693174244113c2ac1fdda6a3\",\n                \"firstName\": \"Anu\",\n                \"lastName\": \"Kumar\",\n                \"email\": \"anuku@gmail.com\",\n                \"createdAt\": \"2025-12-04T11:44:36.470Z\"\n            },\n            {\n                \"_id\": \"693173bc4113c2ac1fdda69d\",\n                \"firstName\": \"Anu\",\n                \"lastName\": \"Sharma\",\n                \"email\": \"anu@gmail.com\",\n                \"createdAt\": \"2025-12-04T11:42:52.090Z\"\n            },\n            {\n                \"_id\": \"6931732d4113c2ac1fdda697\",\n                \"firstName\": \"Krit\",\n                \"lastName\": \"Kapoor\",\n                \"email\": \"krit@gmail.com\",\n                \"createdAt\": \"2025-12-04T11:40:29.594Z\"\n            }\n        ],\n        \"latestCompetitions\": [\n            {\n                \"_id\": \"6960149d1cc9015db35d4a70\",\n                \"title\": \"Dance Battle 4\",\n                \"startDate\": \"2026-02-01T00:00:00.000Z\",\n                \"endDate\": \"2026-02-05T00:00:00.000Z\",\n                \"status\": \"COMPLETED\",\n                \"createdAt\": \"2026-01-08T20:33:33.797Z\"\n            },\n            {\n                \"_id\": \"696012b92c3d259129dfac94\",\n                \"title\": \"Dance Battle 3\",\n                \"startDate\": \"2026-02-01T00:00:00.000Z\",\n                \"endDate\": \"2026-02-05T00:00:00.000Z\",\n                \"status\": \"APPROVED\",\n                \"createdAt\": \"2026-01-08T20:25:29.287Z\"\n            },\n            {\n                \"_id\": \"69600f8d2c3d259129dfac88\",\n                \"title\": \"Dance Battle 2\",\n                \"startDate\": \"2026-02-01T00:00:00.000Z\",\n                \"endDate\": \"2026-02-05T00:00:00.000Z\",\n                \"status\": \"CANCELLED\",\n                \"createdAt\": \"2026-01-08T20:11:57.571Z\"\n            },\n            {\n                \"_id\": \"696002e12c3d259129dfac83\",\n                \"title\": \"Dance Battle\",\n                \"startDate\": \"2026-02-01T00:00:00.000Z\",\n                \"endDate\": \"2026-02-05T00:00:00.000Z\",\n                \"status\": \"APPROVED\",\n                \"createdAt\": \"2026-01-08T19:17:53.772Z\"\n            },\n            {\n                \"_id\": \"695e50dec362d05f363af91c\",\n                \"title\": \"Street Dance Battle – Updated\",\n                \"startDate\": \"2026-01-20T00:00:00.000Z\",\n                \"endDate\": \"2026-01-25T00:00:00.000Z\",\n                \"status\": \"CREATED\",\n                \"createdAt\": \"2026-01-07T12:26:06.147Z\"\n            }\n        ],\n        \"contestJoined\": [],\n        \"totalCompleted\": 1,\n        \"newCompetitionHeld\": {\n            \"_id\": \"696012b92c3d259129dfac94\",\n            \"title\": \"Dance Battle 3\",\n            \"status\": \"APPROVED\",\n            \"createdAt\": \"2026-01-08T20:25:29.287Z\"\n        }\n    }\n}"
 								}
 							]
 						},
@@ -3122,7 +3122,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"rCode\": 1,\n    \"msg\": \"success\",\n    \"rData\": [\n        {\n            \"isDeleted\": false,\n            \"_id\": \"695e50dec362d05f363af91c\",\n            \"title\": \"Street Dance Battle \u2013 Updated\",\n            \"description\": \"Open city-level dance competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 100,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-01-20T00:00:00.000Z\",\n            \"endDate\": \"2026-01-25T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-07T12:26:06.147Z\",\n            \"updatedAt\": \"2026-01-07T12:30:21.592Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+									"body": "{\n    \"rCode\": 1,\n    \"msg\": \"success\",\n    \"rData\": [\n        {\n            \"isDeleted\": false,\n            \"_id\": \"695e50dec362d05f363af91c\",\n            \"title\": \"Street Dance Battle – Updated\",\n            \"description\": \"Open city-level dance competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 100,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-01-20T00:00:00.000Z\",\n            \"endDate\": \"2026-01-25T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-07T12:26:06.147Z\",\n            \"updatedAt\": \"2026-01-07T12:30:21.592Z\",\n            \"__v\": 0\n        }\n    ]\n}"
 								},
 								{
 									"name": "List Competitions with sponser id",
@@ -3187,7 +3187,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"rCode\": 1,\n    \"msg\": \"success\",\n    \"rData\": [\n        {\n            \"isDeleted\": false,\n            \"_id\": \"695e50dec362d05f363af91c\",\n            \"title\": \"Street Dance Battle \u2013 Updated\",\n            \"description\": \"Open city-level dance competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 100,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-01-20T00:00:00.000Z\",\n            \"endDate\": \"2026-01-25T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-07T12:26:06.147Z\",\n            \"updatedAt\": \"2026-01-07T12:30:21.592Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+									"body": "{\n    \"rCode\": 1,\n    \"msg\": \"success\",\n    \"rData\": [\n        {\n            \"isDeleted\": false,\n            \"_id\": \"695e50dec362d05f363af91c\",\n            \"title\": \"Street Dance Battle – Updated\",\n            \"description\": \"Open city-level dance competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 100,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-01-20T00:00:00.000Z\",\n            \"endDate\": \"2026-01-25T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-07T12:26:06.147Z\",\n            \"updatedAt\": \"2026-01-07T12:30:21.592Z\",\n            \"__v\": 0\n        }\n    ]\n}"
 								},
 								{
 									"name": "List Competitions",
@@ -3252,7 +3252,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"isDeleted\": false,\n            \"_id\": \"695e50dec362d05f363af91c\",\n            \"title\": \"Street Dance Battle \u2013 Updated\",\n            \"description\": \"Open city-level dance competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 100,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-01-20T00:00:00.000Z\",\n            \"endDate\": \"2026-01-25T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-07T12:26:06.147Z\",\n            \"updatedAt\": \"2026-01-07T12:30:21.592Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696002e12c3d259129dfac83\",\n            \"title\": \"Dance Battle\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T19:17:53.772Z\",\n            \"updatedAt\": \"2026-01-08T19:23:53.874Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"69600f8d2c3d259129dfac88\",\n            \"title\": \"Dance Battle 2\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"CANCELLED\",\n            \"participants\": [],\n            \"isActive\": false,\n            \"isDeleted\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T20:11:57.571Z\",\n            \"updatedAt\": \"2026-01-08T20:14:41.530Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696012b92c3d259129dfac94\",\n            \"title\": \"Dance Battle 3\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T20:25:29.287Z\",\n            \"updatedAt\": \"2026-01-08T20:25:45.630Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6960149d1cc9015db35d4a70\",\n            \"title\": \"Dance Battle 4\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"COMPLETED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [\n                {\n                    \"userId\": \"6956a2a4f61b3a1bdb8faf99\",\n                    \"rank\": 1,\n                    \"prize\": 3000,\n                    \"_id\": \"696014c91cc9015db35d4a74\"\n                },\n                {\n                    \"userId\": \"6956a2a4f61b3a1bdb8faf88\",\n                    \"rank\": 2,\n                    \"prize\": 2000,\n                    \"_id\": \"696014c91cc9015db35d4a75\"\n                }\n            ],\n            \"createdAt\": \"2026-01-08T20:33:33.797Z\",\n            \"updatedAt\": \"2026-01-08T20:34:17.577Z\",\n            \"__v\": 1\n        }\n    ]\n}"
+									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"isDeleted\": false,\n            \"_id\": \"695e50dec362d05f363af91c\",\n            \"title\": \"Street Dance Battle – Updated\",\n            \"description\": \"Open city-level dance competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 100,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-01-20T00:00:00.000Z\",\n            \"endDate\": \"2026-01-25T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-07T12:26:06.147Z\",\n            \"updatedAt\": \"2026-01-07T12:30:21.592Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696002e12c3d259129dfac83\",\n            \"title\": \"Dance Battle\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T19:17:53.772Z\",\n            \"updatedAt\": \"2026-01-08T19:23:53.874Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"69600f8d2c3d259129dfac88\",\n            \"title\": \"Dance Battle 2\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"CANCELLED\",\n            \"participants\": [],\n            \"isActive\": false,\n            \"isDeleted\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T20:11:57.571Z\",\n            \"updatedAt\": \"2026-01-08T20:14:41.530Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696012b92c3d259129dfac94\",\n            \"title\": \"Dance Battle 3\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T20:25:29.287Z\",\n            \"updatedAt\": \"2026-01-08T20:25:45.630Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6960149d1cc9015db35d4a70\",\n            \"title\": \"Dance Battle 4\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"COMPLETED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [\n                {\n                    \"userId\": \"6956a2a4f61b3a1bdb8faf99\",\n                    \"rank\": 1,\n                    \"prize\": 3000,\n                    \"_id\": \"696014c91cc9015db35d4a74\"\n                },\n                {\n                    \"userId\": \"6956a2a4f61b3a1bdb8faf88\",\n                    \"rank\": 2,\n                    \"prize\": 2000,\n                    \"_id\": \"696014c91cc9015db35d4a75\"\n                }\n            ],\n            \"createdAt\": \"2026-01-08T20:33:33.797Z\",\n            \"updatedAt\": \"2026-01-08T20:34:17.577Z\",\n            \"__v\": 1\n        }\n    ]\n}"
 								}
 							]
 						},
@@ -5536,6 +5536,128 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Sound FX Management",
+					"item": [
+						{
+							"name": "Create Sound FX",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"type": "text",
+											"value": "Air Horn"
+										},
+										{
+											"key": "category",
+											"type": "text",
+											"value": "hype"
+										},
+										{
+											"key": "duration",
+											"type": "text",
+											"value": "2"
+										},
+										{
+											"key": "audio",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/soundfx",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"soundfx"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Sound FX",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Updated name\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/soundfx/{{SOUNDFX_ID}}",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"soundfx",
+										"{{SOUNDFX_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Sound FX",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ADMIN_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}admin/soundfx/{{SOUNDFX_ID}}",
+									"host": [
+										"{{BASE_URL}}admin"
+									],
+									"path": [
+										"soundfx",
+										"{{SOUNDFX_ID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -6577,7 +6699,7 @@
 									"_postman_previewlanguage": null,
 									"header": null,
 									"cookie": [],
-									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"isDeleted\": false,\n            \"_id\": \"695e50dec362d05f363af91c\",\n            \"title\": \"Street Dance Battle \u2013 Updated\",\n            \"description\": \"Open city-level dance competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 100,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-01-20T00:00:00.000Z\",\n            \"endDate\": \"2026-01-25T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-07T12:26:06.147Z\",\n            \"updatedAt\": \"2026-01-07T12:30:21.592Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696002e12c3d259129dfac83\",\n            \"title\": \"Dance Battle\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T19:17:53.772Z\",\n            \"updatedAt\": \"2026-01-08T19:23:53.874Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"69600f8d2c3d259129dfac88\",\n            \"title\": \"Dance Battle 2\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"CANCELLED\",\n            \"participants\": [],\n            \"isActive\": false,\n            \"isDeleted\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T20:11:57.571Z\",\n            \"updatedAt\": \"2026-01-08T20:14:41.530Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696012b92c3d259129dfac94\",\n            \"title\": \"Dance Battle 3\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T20:25:29.287Z\",\n            \"updatedAt\": \"2026-01-08T20:25:45.630Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6960149d1cc9015db35d4a70\",\n            \"title\": \"Dance Battle 4\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"COMPLETED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [\n                {\n                    \"userId\": \"6956a2a4f61b3a1bdb8faf99\",\n                    \"rank\": 1,\n                    \"prize\": 3000,\n                    \"_id\": \"696014c91cc9015db35d4a74\"\n                },\n                {\n                    \"userId\": \"6956a2a4f61b3a1bdb8faf88\",\n                    \"rank\": 2,\n                    \"prize\": 2000,\n                    \"_id\": \"696014c91cc9015db35d4a75\"\n                }\n            ],\n            \"createdAt\": \"2026-01-08T20:33:33.797Z\",\n            \"updatedAt\": \"2026-01-08T20:34:17.577Z\",\n            \"__v\": 1\n        },\n        {\n            \"_id\": \"6960bd9124ca96d73e13f0d5\",\n            \"title\": \"Dance Battle 4\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-09T08:34:25.828Z\",\n            \"updatedAt\": \"2026-01-09T08:34:25.828Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696602746b15f9f3974aa818\",\n            \"title\": \"Delhi Dance 2026\",\n            \"description\": \"This is a Dance Competition\",\n            \"entryFee\": 0,\n            \"prizePool\": 0,\n            \"startDate\": \"2026-02-25T00:00:00.000Z\",\n            \"endDate\": \"2026-02-27T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-13T08:29:40.658Z\",\n            \"updatedAt\": \"2026-01-13T08:32:27.423Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696603796b15f9f3974aa87b\",\n            \"title\": \"Music-Battle-2026\",\n            \"description\": \"Music Competition\",\n            \"entryFee\": 100,\n            \"prizePool\": 3000,\n            \"startDate\": \"2026-02-02T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"live\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-13T08:34:01.726Z\",\n            \"updatedAt\": \"2026-01-13T09:33:40.048Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6966216c6b15f9f3974aaa08\",\n            \"title\": \"Delhi Dance 2026\",\n            \"description\": \"The is Dance Competition\",\n            \"sponsorId\": {\n                \"_id\": \"6966199d6b15f9f3974aa933\",\n                \"email\": \"avijangid7011@gmail.com\",\n                \"sponsorCode\": \"SP1768298909270\"\n            },\n            \"entryFee\": 400,\n            \"prizePool\": 2000,\n            \"startDate\": \"2026-01-10T00:00:00.000Z\",\n            \"endDate\": \"2026-01-20T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-13T10:41:48.425Z\",\n            \"updatedAt\": \"2026-01-13T10:42:40.094Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"isDeleted\": false,\n            \"_id\": \"695e50dec362d05f363af91c\",\n            \"title\": \"Street Dance Battle – Updated\",\n            \"description\": \"Open city-level dance competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 100,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-01-20T00:00:00.000Z\",\n            \"endDate\": \"2026-01-25T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-07T12:26:06.147Z\",\n            \"updatedAt\": \"2026-01-07T12:30:21.592Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696002e12c3d259129dfac83\",\n            \"title\": \"Dance Battle\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T19:17:53.772Z\",\n            \"updatedAt\": \"2026-01-08T19:23:53.874Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"69600f8d2c3d259129dfac88\",\n            \"title\": \"Dance Battle 2\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 7000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"CANCELLED\",\n            \"participants\": [],\n            \"isActive\": false,\n            \"isDeleted\": true,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T20:11:57.571Z\",\n            \"updatedAt\": \"2026-01-08T20:14:41.530Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696012b92c3d259129dfac94\",\n            \"title\": \"Dance Battle 3\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-08T20:25:29.287Z\",\n            \"updatedAt\": \"2026-01-08T20:25:45.630Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6960149d1cc9015db35d4a70\",\n            \"title\": \"Dance Battle 4\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"COMPLETED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [\n                {\n                    \"userId\": \"6956a2a4f61b3a1bdb8faf99\",\n                    \"rank\": 1,\n                    \"prize\": 3000,\n                    \"_id\": \"696014c91cc9015db35d4a74\"\n                },\n                {\n                    \"userId\": \"6956a2a4f61b3a1bdb8faf88\",\n                    \"rank\": 2,\n                    \"prize\": 2000,\n                    \"_id\": \"696014c91cc9015db35d4a75\"\n                }\n            ],\n            \"createdAt\": \"2026-01-08T20:33:33.797Z\",\n            \"updatedAt\": \"2026-01-08T20:34:17.577Z\",\n            \"__v\": 1\n        },\n        {\n            \"_id\": \"6960bd9124ca96d73e13f0d5\",\n            \"title\": \"Dance Battle 4\",\n            \"description\": \"City level competition\",\n            \"sponsorId\": {\n                \"_id\": \"6956a295f61b3a1bdb8faf51\",\n                \"email\": \"admin@gullyfame.com\"\n            },\n            \"entryFee\": 50,\n            \"prizePool\": 5000,\n            \"startDate\": \"2026-02-01T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"CREATED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-09T08:34:25.828Z\",\n            \"updatedAt\": \"2026-01-09T08:34:25.828Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696602746b15f9f3974aa818\",\n            \"title\": \"Delhi Dance 2026\",\n            \"description\": \"This is a Dance Competition\",\n            \"entryFee\": 0,\n            \"prizePool\": 0,\n            \"startDate\": \"2026-02-25T00:00:00.000Z\",\n            \"endDate\": \"2026-02-27T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-13T08:29:40.658Z\",\n            \"updatedAt\": \"2026-01-13T08:32:27.423Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"696603796b15f9f3974aa87b\",\n            \"title\": \"Music-Battle-2026\",\n            \"description\": \"Music Competition\",\n            \"entryFee\": 100,\n            \"prizePool\": 3000,\n            \"startDate\": \"2026-02-02T00:00:00.000Z\",\n            \"endDate\": \"2026-02-05T00:00:00.000Z\",\n            \"status\": \"live\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-13T08:34:01.726Z\",\n            \"updatedAt\": \"2026-01-13T09:33:40.048Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6966216c6b15f9f3974aaa08\",\n            \"title\": \"Delhi Dance 2026\",\n            \"description\": \"The is Dance Competition\",\n            \"sponsorId\": {\n                \"_id\": \"6966199d6b15f9f3974aa933\",\n                \"email\": \"avijangid7011@gmail.com\",\n                \"sponsorCode\": \"SP1768298909270\"\n            },\n            \"entryFee\": 400,\n            \"prizePool\": 2000,\n            \"startDate\": \"2026-01-10T00:00:00.000Z\",\n            \"endDate\": \"2026-01-20T00:00:00.000Z\",\n            \"status\": \"APPROVED\",\n            \"participants\": [],\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"winners\": [],\n            \"createdAt\": \"2026-01-13T10:41:48.425Z\",\n            \"updatedAt\": \"2026-01-13T10:42:40.094Z\",\n            \"__v\": 0\n        }\n    ]\n}"
 								}
 							]
 						}
@@ -6797,6 +6919,61 @@
 									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": {\n        \"page\": 1,\n        \"limit\": 10,\n        \"time\": 2,\n        \"totalNotifications\": 15,\n        \"unreadCount\": 0,\n        \"notifications\": [\n            {\n                \"_id\": \"notif_past_001\",\n                \"title\": \"Competition Ended\",\n                \"description\": \"Cooking Wars has ended. Check results!\",\n                \"status\": \"read\",\n                \"createdAt\": \"2026-03-05T09:00:00.000Z\"\n            }\n        ]\n    }\n}"
 								}
 							]
+						},
+						{
+							"name": "Mark Notification As Read",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}notification/{{NOTIFICATION_ID}}/read",
+									"host": [
+										"{{BASE_URL}}notification"
+									],
+									"path": [
+										"{{NOTIFICATION_ID}}",
+										"read"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mark All Notifications As Read",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}notification/read-all",
+									"host": [
+										"{{BASE_URL}}notification"
+									],
+									"path": [
+										"read-all"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -6984,7 +7161,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"emoji\": \"\u1f44d\"\n}",
+									"raw": "{\n    \"emoji\": \"ὄd\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -7011,7 +7188,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n    \"emoji\": \"\u1f44d\"\n}",
+											"raw": "{\n    \"emoji\": \"ὄd\"\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -7035,7 +7212,7 @@
 									"_postman_previewlanguage": "json",
 									"header": null,
 									"cookie": [],
-									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": {\n        \"_id\": \"6971ebb1135da8ca6761a749\",\n        \"reactions\": [\n            {\n                \"user_id\": \"6970b9ba0a9b4205c65ab6c9\",\n                \"emoji\": \"\u1f44d\"\n            }\n        ]\n    }\n}"
+									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": {\n        \"_id\": \"6971ebb1135da8ca6761a749\",\n        \"reactions\": [\n            {\n                \"user_id\": \"6970b9ba0a9b4205c65ab6c9\",\n                \"emoji\": \"ὄd\"\n            }\n        ]\n    }\n}"
 								}
 							]
 						},
@@ -7208,6 +7385,75 @@
 									"body": "{\n    \"code\": 1,\n    \"message\": \"Messages marked as read\",\n    \"data\": {\n        \"modifiedCount\": 3\n    }\n}"
 								}
 							]
+						},
+						{
+							"name": "Archive / Unarchive Chat",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"chatterId\": \"{{CHATTER_ID}}\",\n  \"archived\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}chat/archive",
+									"host": [
+										"{{BASE_URL}}chat"
+									],
+									"path": [
+										"archive"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Chat List - Archived",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}chat/chatlist?view=archived",
+									"host": [
+										"{{BASE_URL}}chat"
+									],
+									"path": [
+										"chatlist"
+									],
+									"query": [
+										{
+											"key": "view",
+											"value": "archived"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -7472,6 +7718,43 @@
 									"path": [
 										"{{COMPETITION_ID}}",
 										"join"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invite To Competition (Rap Battle)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"toUserId\": \"{{OTHER_USER_ID}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}competitions/{{COMPETITION_ID}}/invite",
+									"host": [
+										"{{BASE_URL}}competitions"
+									],
+									"path": [
+										"{{COMPETITION_ID}}",
+										"invite"
 									]
 								}
 							},
@@ -8026,6 +8309,135 @@
 									"path": [
 										"{{REEL_ID}}",
 										"tip"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Upload URL (Voice-over)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"fileName\": \"my_voiceover.m4a\",\n  \"fileType\": \"audio/m4a\",\n  \"assetType\": \"voiceovers\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/upload-url",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"upload-url"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Draft (with Editor State)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"video_url\": \"https://bank-ster-dev.s3.ap-south-1.amazonaws.com/reels/example.mp4\",\n  \"caption\": \"My reel\",\n  \"editState\": {\n    \"adjustments\": {\n      \"brightness\": 10,\n      \"contrast\": 5,\n      \"highlights\": 0,\n      \"shadows\": -5\n    },\n    \"filter\": {\n      \"name\": \"Vintage\"\n    },\n    \"overlays\": [\n      {\n        \"type\": \"text\",\n        \"text\": \"Good morning!\",\n        \"x\": 40,\n        \"y\": 120,\n        \"startMs\": 0,\n        \"endMs\": 3000\n      }\n    ],\n    \"stickers\": [],\n    \"soundFx\": []\n  },\n  \"voiceOver\": {\n    \"url\": \"https://bank-ster-dev.s3.ap-south-1.amazonaws.com/voiceovers/example.m4a\",\n    \"volume\": 1\n  },\n  \"ctaLink\": {\n    \"label\": \"Follow me on Insta\",\n    \"url\": \"https://instagram.com/example\"\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/draft",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"draft"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Start Export (Server-side Render)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/{{REEL_ID}}/export",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"{{REEL_ID}}",
+										"export"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Export Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}reels/{{REEL_ID}}/export/status",
+									"host": [
+										"{{BASE_URL}}reels"
+									],
+									"path": [
+										"{{REEL_ID}}",
+										"export",
+										"status"
 									]
 								}
 							},
@@ -8609,6 +9021,65 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Gamification",
+					"item": [
+						{
+							"name": "Get Progress (XP / Level / Streak)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/progress",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"progress"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Daily Mission (Vote on 5 videos)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/daily-mission",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"daily-mission"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -8904,6 +9375,28 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Sound FX",
+					"item": [
+						{
+							"name": "List Sound FX",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}public/soundfx",
+									"host": [
+										"{{BASE_URL}}public"
+									],
+									"path": [
+										"soundfx"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
@@ -8936,6 +9429,26 @@
 		},
 		{
 			"key": "MESSAGE_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "NOTIFICATION_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "CHATTER_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "OTHER_USER_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "SOUNDFX_ID",
 			"value": "",
 			"type": "string"
 		}

@@ -15,4 +15,24 @@ notificationRouter.get(
   ResponseMiddleware,
 );
 
+/**
+ * PUT /notification/:notificationId/read - Mark a single notification as read
+ */
+notificationRouter.put(
+  "/:notificationId/read",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(NotificationController().markAsRead),
+  ResponseMiddleware,
+);
+
+/**
+ * PUT /notification/read-all - Mark all of the caller's notifications as read
+ */
+notificationRouter.put(
+  "/read-all",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(NotificationController().markAllAsRead),
+  ResponseMiddleware,
+);
+
 module.exports = notificationRouter;

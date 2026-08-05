@@ -30,6 +30,78 @@ const ReelSchema = new Schema(
       id: { type: String, default: "" },
       name: { type: String, default: "" },
     },
+    // Persists the full editor session (filters/adjustments/stickers/overlays/timeline)
+    // so a draft can be resumed and, once exported, re-derived if needed.
+    editState: {
+      clips: [
+        {
+          url: { type: String },
+          startMs: { type: Number, default: 0 },
+          endMs: { type: Number, default: 0 },
+          order: { type: Number, default: 0 },
+        },
+      ],
+      adjustments: {
+        brightness: { type: Number, default: 0 },
+        contrast: { type: Number, default: 0 },
+        highlights: { type: Number, default: 0 },
+        shadows: { type: Number, default: 0 },
+      },
+      filter: {
+        filterId: { type: Schema.Types.ObjectId, ref: "Filter", default: null },
+        name: { type: String, default: "" },
+      },
+      stickers: [
+        {
+          sticker: { type: Schema.Types.ObjectId, ref: "Sticker" },
+          x: { type: Number, default: 0 },
+          y: { type: Number, default: 0 },
+          scale: { type: Number, default: 1 },
+          startMs: { type: Number, default: 0 },
+          endMs: { type: Number, default: 0 },
+        },
+      ],
+      overlays: [
+        {
+          type: { type: String, enum: ["text", "image"], default: "text" },
+          text: { type: String, default: "" },
+          imageUrl: { type: String, default: "" },
+          x: { type: Number, default: 0 },
+          y: { type: Number, default: 0 },
+          startMs: { type: Number, default: 0 },
+          endMs: { type: Number, default: 0 },
+        },
+      ],
+      soundFx: [
+        {
+          soundFx: { type: Schema.Types.ObjectId, ref: "SoundFx" },
+          atMs: { type: Number, default: 0 },
+          volume: { type: Number, default: 1 },
+        },
+      ],
+    },
+    voiceOver: {
+      url: { type: String, default: "" },
+      volume: { type: Number, default: 1 },
+    },
+    ctaLink: {
+      label: { type: String, default: "" },
+      url: { type: String, default: "" },
+    },
+    // Server-side export (fallback for on-device composition failures)
+    exportStatus: {
+      type: String,
+      enum: ["none", "pending", "processing", "ready", "failed"],
+      default: "none",
+    },
+    exportError: {
+      type: String,
+      default: "",
+    },
+    exportedAt: {
+      type: Date,
+      default: null,
+    },
     status: {
       type: String,
       enum: ["draft", "published"],

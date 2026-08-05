@@ -134,5 +134,16 @@ module.exports = (lang = "en") => {
     insufficient_balance: "Insufficient wallet balance",
     invalid_amount: "amount must be a positive number",
     cannot_tip_self: "You cannot tip yourself",
+    notification_not_found: "Notification not found",
+    soundfx_audio_required: "audio file is required",
+    soundfx_created: "Sound FX added successfully",
+    soundfx_deleted: "Sound FX deleted successfully",
+    chatter_id_required_for_archive: "chatterId is required",
+    reel_export_queued: "Export started",
+    reel_not_exportable: "Reel must have a video before it can be exported",
+    ffmpeg_not_installed:
+      "ffmpeg is not installed on this server — server-side export is unavailable",
+    to_user_id_required: "toUserId is required",
+    cannot_invite_self: "You cannot invite yourself",
   };
 };

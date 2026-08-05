@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const ResponseMiddleware = require("./ResponseMiddleware");
 const JWTSECRET = process.env.JWTSECRET;
 const UserService = require("../services/UserService");
+const GamificationService = require("../services/GamificationService");
 
 module.exports = () => {
   const verifyUserToken = async (req, res, next) => {
@@ -30,6 +31,13 @@ module.exports = () => {
           console.log(`User with ID ${user._id} entered.`);
           // req.body.userId = user._id;
           req.body = { ...(req.body || {}), userId: user._id };
+
+          // Best-effort daily streak touch — no-ops if already counted today,
+          // so this stays a single cheap check on every other request.
+          GamificationService()
+            .touchStreak(user._id, user)
+            .catch((e) => console.log("touchStreak error", e.message));
+
           next();
         } else {
           throw new Error("invalid_token");

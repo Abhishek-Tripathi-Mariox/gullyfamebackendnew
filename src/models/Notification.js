@@ -23,6 +23,26 @@ const NotificationSchema = new Schema(
       enum: ["read", "unRead"],
       default: "unRead",
     },
+    type: {
+      type: String,
+      enum: [
+        "RANK_BOOST",
+        "LEVEL_UP",
+        "DAILY_CHALLENGE_READY",
+        "DAILY_CHALLENGE_COMPLETE",
+        "RAP_BATTLE_INVITE",
+        "UPCOMING_EVENT",
+        "PROFILE_UPDATE",
+        "SUPPORT_RECEIVED",
+        "GENERAL",
+      ],
+      default: "GENERAL",
+    },
+    // Free-form payload the client uses for deep-linking (e.g. { competitionId, reelId })
+    data: {
+      type: Schema.Types.Mixed,
+      default: {},
+    },
     isActive: {
       type: Boolean,
       default: true,

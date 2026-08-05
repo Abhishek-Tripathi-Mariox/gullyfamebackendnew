@@ -15,6 +15,17 @@ chatRouter.get(
 );
 
 /**
+ * POST /chat/archive - Archive/unarchive a conversation for the caller
+ * Body: chatterId, archived (bool, default true)
+ */
+chatRouter.post(
+  "/archive",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(ChatController().archiveToggle),
+  ResponseMiddleware,
+);
+
+/**
  * GET /chat/chatDetails - Get 1-on-1 chat messages with pagination
  * Query params: chatterId, page, limit
  */

@@ -23,5 +23,34 @@ module.exports = () => {
     next();
   };
 
-  return { getNotifications };
+  const markAsRead = async (req, res, next) => {
+    console.log("NotificationController => markAsRead");
+    const { notificationId } = req.params;
+    const { userId } = req.body;
+
+    const data = await NotificationService().markAsRead(notificationId, userId);
+
+    if (!data) {
+      req.rCode = 5;
+      req.msg = "notification_not_found";
+      return next();
+    }
+
+    req.rData = data;
+    req.msg = "success";
+    next();
+  };
+
+  const markAllAsRead = async (req, res, next) => {
+    console.log("NotificationController => markAllAsRead");
+    const { userId } = req.body;
+
+    const data = await NotificationService().markAllAsRead(userId);
+
+    req.rData = data;
+    req.msg = "success";
+    next();
+  };
+
+  return { getNotifications, markAsRead, markAllAsRead };
 };
