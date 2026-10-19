@@ -5780,7 +5780,8 @@
 									"path": [
 										"login"
 									]
-								}
+								},
+								"description": "Login with password (`viaPassword: true`) or OTP (`viaPassword: false`).\n\n**OTP login:** sends the code by SMS through Twilio. Body: `{ \"userId\": \"9876543210\", \"viaPassword\": false, \"countryCode\": \"+91\" }` (`countryCode` defaults to `+91`). Response has `txnId` (saved into `TXN_ID`), `userRegister`, `smsSent` and `expiresIn` (seconds).\n\n- `smsSent: false` → SMS not delivered (Twilio not configured, send failed, or email login); the master OTP still works while `MASTER_OTP_ENABLED=true`.\n- Requesting again within 30 seconds → 400 `otp_resend_too_soon`."
 							},
 							"response": [
 								{
@@ -5910,6 +5911,57 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 1,\n    \"data\": {\n        \"user\": {\n            \"location\": {\n                \"type\": \"Point\",\n                \"coordinates\": [\n                    0,\n                    0\n                ]\n            },\n            \"_id\": \"69298a032f1df96886b776ee\",\n            \"firstName\": \"test\",\n            \"lastName\": \"last\",\n            \"email\": \"test1@gmail.com\",\n            \"profileImage\": \"\",\n            \"gender\": \"\",\n            \"role\": \"participants\",\n            \"dob\": \"\",\n            \"mobile\": \"2531456985\",\n            \"isActive\": true,\n            \"isDeleted\": false,\n            \"notificationAllowed\": true,\n            \"googleId\": \"\",\n            \"appleId\": \"\",\n            \"device_token\": \"\",\n            \"device_type\": \"\",\n            \"createdAt\": \"2025-11-28T11:39:47.454Z\",\n            \"updatedAt\": \"2025-11-28T11:39:47.454Z\",\n            \"__v\": 0\n        },\n        \"token\": \"<jwt_token>\"\n    }\n}"
+								},
+								{
+									"name": "Login via OTP (Twilio)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"userId\": \"9876543210\",\n    \"viaPassword\": false,\n    \"countryCode\": \"+91\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}auth/login",
+											"host": [
+												"{{BASE_URL}}auth"
+											],
+											"path": [
+												"login"
+											]
+										},
+										"description": "Login with password (`viaPassword: true`) or OTP (`viaPassword: false`).\n\n**OTP login:** sends the code by SMS through Twilio. Body: `{ \"userId\": \"9876543210\", \"viaPassword\": false, \"countryCode\": \"+91\" }` (`countryCode` defaults to `+91`). Response has `txnId` (saved into `TXN_ID`), `userRegister`, `smsSent` and `expiresIn` (seconds).\n\n- `smsSent: false` → SMS not delivered (Twilio not configured, send failed, or email login); the master OTP still works while `MASTER_OTP_ENABLED=true`.\n- Requesting again within 30 seconds → 400 `otp_resend_too_soon`."
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 1,\n    \"message\": \"otp send to your register mobile number\",\n    \"data\": {\n        \"userRegister\": true,\n        \"txnId\": \"2e0092c3-c4dd-46f5-b721-56fe5e8d7263\",\n        \"smsSent\": true,\n        \"expiresIn\": 300\n    }\n}"
+								}
+							],
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"const res = pm.response.json();",
+											"if (res.data && res.data.txnId) {",
+											"    pm.collectionVariables.set(\"TXN_ID\", res.data.txnId);",
+											"}"
+										]
+									}
 								}
 							]
 						},
@@ -5920,7 +5972,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"txnId\": \"2e0092c3-c4dd-46f5-b721-56fe5e8d7263\",\r\n    \"otp\": 123456\r\n}",
+									"raw": "{\r\n    \"txnId\": \"{{TXN_ID}}\",\r\n    \"otp\": 123456\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -5935,7 +5987,8 @@
 									"path": [
 										"verifyOtp"
 									]
-								}
+								},
+								"description": "Verify the OTP from **Login** or **Resend otp**. `txnId` comes from the `TXN_ID` variable.\n\n- Accepts the SMS code, or the master OTP while `MASTER_OTP_ENABLED=true`.\n- A new mobile number gets an account automatically (`isNewUser: true`).\n- Saves `token` into `USER_TOKEN`.\n\nErrors (400): `incorrect otp, try again!`, `OTP has expired, please request a new one` (also after a successful verify — codes are single-use), `Too many incorrect attempts, please request a new OTP` (after 5 wrong tries)."
 							},
 							"response": [
 								{
@@ -6001,6 +6054,94 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 1,\n    \"message\": \"login successfully\",\n    \"data\": {\n        \"token\": \"<jwt_token>\",\n        \"userId\": \"69298a032f1df96886b776ee\"\n    }\n}"
+								},
+								{
+									"name": "VerifyOtp (new user)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"txnId\": \"{{TXN_ID}}\",\r\n    \"otp\": 123456\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}auth/verifyOtp",
+											"host": [
+												"{{BASE_URL}}auth"
+											],
+											"path": [
+												"verifyOtp"
+											]
+										},
+										"description": "Verify the OTP from **Login** or **Resend otp**. `txnId` comes from the `TXN_ID` variable.\n\n- Accepts the SMS code, or the master OTP while `MASTER_OTP_ENABLED=true`.\n- A new mobile number gets an account automatically (`isNewUser: true`).\n- Saves `token` into `USER_TOKEN`.\n\nErrors (400): `incorrect otp, try again!`, `OTP has expired, please request a new one` (also after a successful verify — codes are single-use), `Too many incorrect attempts, please request a new OTP` (after 5 wrong tries)."
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 1,\n    \"message\": \"login successfully\",\n    \"data\": {\n        \"token\": \"<jwt_token>\",\n        \"userId\": \"6ad5c5d3fbcbfd72387df7fc\",\n        \"isNewUser\": true\n    }\n}"
+								},
+								{
+									"name": "Incorrect OTP",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"txnId\": \"{{TXN_ID}}\",\r\n    \"otp\": 123456\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}auth/verifyOtp",
+											"host": [
+												"{{BASE_URL}}auth"
+											],
+											"path": [
+												"verifyOtp"
+											]
+										},
+										"description": "Verify the OTP from **Login** or **Resend otp**. `txnId` comes from the `TXN_ID` variable.\n\n- Accepts the SMS code, or the master OTP while `MASTER_OTP_ENABLED=true`.\n- A new mobile number gets an account automatically (`isNewUser: true`).\n- Saves `token` into `USER_TOKEN`.\n\nErrors (400): `incorrect otp, try again!`, `OTP has expired, please request a new one` (also after a successful verify — codes are single-use), `Too many incorrect attempts, please request a new OTP` (after 5 wrong tries)."
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 0,\n    \"message\": \"incorrect otp, try again!\",\n    \"data\": {}\n}"
+								}
+							],
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"const res = pm.response.json();",
+											"if (res.data && res.data.token) {",
+											"    pm.collectionVariables.set(\"USER_TOKEN\", res.data.token);",
+											"}"
+										]
+									}
 								}
 							]
 						},
@@ -6296,7 +6437,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"userId\": \"2531456985\" //email or mobile\r\n}",
+									"raw": "{\r\n    \"userId\": \"2531456985\", //email or mobile\r\n    \"countryCode\": \"+91\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -6311,7 +6452,8 @@
 									"path": [
 										"resendOtp"
 									]
-								}
+								},
+								"description": "Sends a new OTP and returns a new `txnId` (saved into `TXN_ID`). `countryCode` is optional (default `+91`). Wait 30 seconds between requests for the same number, otherwise 400 `Please wait a few seconds before requesting another OTP`."
 							},
 							"response": [
 								{
@@ -6377,6 +6519,57 @@
 									],
 									"cookie": [],
 									"body": "{\n    \"code\": 1,\n    \"data\": {\n        \"txnId\": \"2e0092c3-c4dd-46f5-b721-56fe5e8d7263\"\n    }\n}"
+								},
+								{
+									"name": "Resend otp (Twilio)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"userId\": \"2531456985\", //email or mobile\r\n    \"countryCode\": \"+91\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}auth/resendOtp",
+											"host": [
+												"{{BASE_URL}}auth"
+											],
+											"path": [
+												"resendOtp"
+											]
+										},
+										"description": "Sends a new OTP and returns a new `txnId` (saved into `TXN_ID`). `countryCode` is optional (default `+91`). Wait 30 seconds between requests for the same number, otherwise 400 `Please wait a few seconds before requesting another OTP`."
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 1,\n    \"message\": \"otp resent to your registered mobile number\",\n    \"data\": {\n        \"txnId\": \"7b1d4f0e-3c2a-4e5b-9f61-0a8c2d3e4f50\",\n        \"smsSent\": true,\n        \"expiresIn\": 300\n    }\n}"
+								}
+							],
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"const res = pm.response.json();",
+											"if (res.data && res.data.txnId) {",
+											"    pm.collectionVariables.set(\"TXN_ID\", res.data.txnId);",
+											"}"
+										]
+									}
 								}
 							]
 						},
@@ -8951,7 +9144,7 @@
 							"response": []
 						},
 						{
-							"name": "Recharge Wallet",
+							"name": "Recharge Wallet (Create Razorpay Order)",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -8983,9 +9176,330 @@
 										"wallet",
 										"recharge"
 									]
-								}
+								},
+								"description": "**Step 1 of a wallet recharge.** Creates a Razorpay order — it does NOT credit the wallet.\n\nOpen Razorpay Checkout in the app with `keyId`, `orderId`, `amountPaise` and `currency` from the response. After payment, send Checkout's result to **Verify Recharge Payment**.\n\n- `amount`: whole rupees, between `WALLET_MIN_RECHARGE` and `WALLET_MAX_RECHARGE` (default 1–100000). 1 rupee = 1 coin.\n- Saves `orderId` into the `RAZORPAY_ORDER_ID` collection variable."
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Order created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"amount\": 100\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}user/wallet/recharge",
+											"host": [
+												"{{BASE_URL}}user"
+											],
+											"path": [
+												"wallet",
+												"recharge"
+											]
+										},
+										"description": "**Step 1 of a wallet recharge.** Creates a Razorpay order — it does NOT credit the wallet.\n\nOpen Razorpay Checkout in the app with `keyId`, `orderId`, `amountPaise` and `currency` from the response. After payment, send Checkout's result to **Verify Recharge Payment**.\n\n- `amount`: whole rupees, between `WALLET_MIN_RECHARGE` and `WALLET_MAX_RECHARGE` (default 1–100000). 1 rupee = 1 coin.\n- Saves `orderId` into the `RAZORPAY_ORDER_ID` collection variable."
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 1,\n    \"message\": \"Payment order created\",\n    \"data\": {\n        \"keyId\": \"rzp_test_xxxxxxxxxxxxxx\",\n        \"orderId\": \"order_QaBcDeFgHiJkLm\",\n        \"amount\": 100,\n        \"amountPaise\": 10000,\n        \"currency\": \"INR\",\n        \"receipt\": \"wr_8df7fc1a2b3c_1792395695135\"\n    }\n}"
+								},
+								{
+									"name": "Invalid amount",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"amount\": 10.5\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}user/wallet/recharge",
+											"host": [
+												"{{BASE_URL}}user"
+											],
+											"path": [
+												"wallet",
+												"recharge"
+											]
+										},
+										"description": "**Step 1 of a wallet recharge.** Creates a Razorpay order — it does NOT credit the wallet.\n\nOpen Razorpay Checkout in the app with `keyId`, `orderId`, `amountPaise` and `currency` from the response. After payment, send Checkout's result to **Verify Recharge Payment**.\n\n- `amount`: whole rupees, between `WALLET_MIN_RECHARGE` and `WALLET_MAX_RECHARGE` (default 1–100000). 1 rupee = 1 coin.\n- Saves `orderId` into the `RAZORPAY_ORDER_ID` collection variable."
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 0,\n    \"message\": \"invalid_recharge_amount\",\n    \"data\": {}\n}"
+								}
+							],
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"const res = pm.response.json();",
+											"if (res.data && res.data.orderId) {",
+											"    pm.collectionVariables.set(\"RAZORPAY_ORDER_ID\", res.data.orderId);",
+											"}"
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "Verify Recharge Payment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"razorpay_order_id\": \"{{RAZORPAY_ORDER_ID}}\",\n  \"razorpay_payment_id\": \"{{RAZORPAY_PAYMENT_ID}}\",\n  \"razorpay_signature\": \"{{RAZORPAY_SIGNATURE}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/wallet/recharge/verify",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"wallet",
+										"recharge",
+										"verify"
+									]
+								},
+								"description": "**Step 2 of a wallet recharge.** Send the three values Razorpay Checkout returns in its success handler.\n\nThe server checks the signature, confirms the payment belongs to this order and is for the full amount, captures it if needed, then credits the wallet. Safe to call more than once — a payment is credited only once (`alreadyProcessed: true` on repeats).\n\nTo test from Postman, complete a payment in Razorpay test mode first and put the returned values into `RAZORPAY_PAYMENT_ID` and `RAZORPAY_SIGNATURE`.\n\nErrors (400): `payment_details_required`, `payment_order_not_found`, `invalid_payment_signature`, `payment_order_mismatch`, `payment_amount_mismatch`, `payment_not_captured`."
+							},
+							"response": [
+								{
+									"name": "Wallet credited",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"razorpay_order_id\": \"{{RAZORPAY_ORDER_ID}}\",\n  \"razorpay_payment_id\": \"{{RAZORPAY_PAYMENT_ID}}\",\n  \"razorpay_signature\": \"{{RAZORPAY_SIGNATURE}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}user/wallet/recharge/verify",
+											"host": [
+												"{{BASE_URL}}user"
+											],
+											"path": [
+												"wallet",
+												"recharge",
+												"verify"
+											]
+										},
+										"description": "**Step 2 of a wallet recharge.** Send the three values Razorpay Checkout returns in its success handler.\n\nThe server checks the signature, confirms the payment belongs to this order and is for the full amount, captures it if needed, then credits the wallet. Safe to call more than once — a payment is credited only once (`alreadyProcessed: true` on repeats).\n\nTo test from Postman, complete a payment in Razorpay test mode first and put the returned values into `RAZORPAY_PAYMENT_ID` and `RAZORPAY_SIGNATURE`.\n\nErrors (400): `payment_details_required`, `payment_order_not_found`, `invalid_payment_signature`, `payment_order_mismatch`, `payment_amount_mismatch`, `payment_not_captured`."
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 1,\n    \"message\": \"Wallet recharged successfully\",\n    \"data\": {\n        \"orderId\": \"order_QaBcDeFgHiJkLm\",\n        \"paymentId\": \"pay_QaBcDeFgHiJkLn\",\n        \"status\": \"PAID\",\n        \"credited\": 100,\n        \"alreadyProcessed\": false,\n        \"balance\": 100\n    }\n}"
+								},
+								{
+									"name": "Invalid signature",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"razorpay_order_id\": \"{{RAZORPAY_ORDER_ID}}\",\n  \"razorpay_payment_id\": \"{{RAZORPAY_PAYMENT_ID}}\",\n  \"razorpay_signature\": \"{{RAZORPAY_SIGNATURE}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}user/wallet/recharge/verify",
+											"host": [
+												"{{BASE_URL}}user"
+											],
+											"path": [
+												"wallet",
+												"recharge",
+												"verify"
+											]
+										},
+										"description": "**Step 2 of a wallet recharge.** Send the three values Razorpay Checkout returns in its success handler.\n\nThe server checks the signature, confirms the payment belongs to this order and is for the full amount, captures it if needed, then credits the wallet. Safe to call more than once — a payment is credited only once (`alreadyProcessed: true` on repeats).\n\nTo test from Postman, complete a payment in Razorpay test mode first and put the returned values into `RAZORPAY_PAYMENT_ID` and `RAZORPAY_SIGNATURE`.\n\nErrors (400): `payment_details_required`, `payment_order_not_found`, `invalid_payment_signature`, `payment_order_mismatch`, `payment_amount_mismatch`, `payment_not_captured`."
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 0,\n    \"message\": \"invalid_payment_signature\",\n    \"data\": {}\n}"
+								}
+							]
+						},
+						{
+							"name": "Recharge Order Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{USER_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}user/wallet/recharge/{{RAZORPAY_ORDER_ID}}",
+									"host": [
+										"{{BASE_URL}}user"
+									],
+									"path": [
+										"wallet",
+										"recharge",
+										"{{RAZORPAY_ORDER_ID}}"
+									]
+								},
+								"description": "Status of one of the user's recharge orders: `CREATED` (waiting for payment), `PAID` (wallet credited) or `FAILED` (`failureReason` says why). Useful if the app closed before calling verify — the webhook still credits the wallet."
+							},
+							"response": [
+								{
+									"name": "Paid",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{USER_TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{BASE_URL}}user/wallet/recharge/{{RAZORPAY_ORDER_ID}}",
+											"host": [
+												"{{BASE_URL}}user"
+											],
+											"path": [
+												"wallet",
+												"recharge",
+												"{{RAZORPAY_ORDER_ID}}"
+											]
+										},
+										"description": "Status of one of the user's recharge orders: `CREATED` (waiting for payment), `PAID` (wallet credited) or `FAILED` (`failureReason` says why). Useful if the app closed before calling verify — the webhook still credits the wallet."
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": {\n        \"orderId\": \"order_QaBcDeFgHiJkLm\",\n        \"paymentId\": \"pay_QaBcDeFgHiJkLn\",\n        \"amount\": 100,\n        \"currency\": \"INR\",\n        \"status\": \"PAID\",\n        \"failureReason\": \"\",\n        \"paidAt\": \"2026-10-19T10:15:42.000Z\",\n        \"createdAt\": \"2026-10-19T10:14:03.000Z\"\n    }\n}"
+								}
+							]
 						}
 					]
 				},
@@ -9399,6 +9913,158 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Webhooks",
+			"description": "Server-to-server callbacks from third-party services. Not called by the app.",
+			"item": [
+				{
+					"name": "Razorpay Webhook",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// Signs the raw body the same way Razorpay does.",
+									"const secret = pm.variables.get(\"RAZORPAY_WEBHOOK_SECRET\") || \"\"; // environment or collection variable",
+									"const signature = CryptoJS.HmacSHA256(pm.request.body.raw, secret).toString(CryptoJS.enc.Hex);",
+									"pm.collectionVariables.set(\"RAZORPAY_WEBHOOK_SIGNATURE\", signature);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Razorpay-Signature",
+								"value": "{{RAZORPAY_WEBHOOK_SIGNATURE}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entity\": \"event\",\n  \"event\": \"order.paid\",\n  \"payload\": {\n    \"payment\": {\n      \"entity\": {\n        \"id\": \"pay_QaBcDeFgHiJkLn\",\n        \"order_id\": \"order_QaBcDeFgHiJkLm\",\n        \"amount\": 10000,\n        \"currency\": \"INR\",\n        \"status\": \"captured\"\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}payments/razorpay/webhook",
+							"host": [
+								"{{BASE_URL}}payments"
+							],
+							"path": [
+								"razorpay",
+								"webhook"
+							]
+						},
+						"description": "**Called by Razorpay, not by the app.** Configure in Razorpay Dashboard → Settings → Webhooks:\n\n- URL: `https://<your-domain>/v1/api/payments/razorpay/webhook`\n- Events: `order.paid`, `payment.captured`, `payment.failed`\n- Secret: same as `RAZORPAY_WEBHOOK_SECRET` in the server `.env`\n\nNo token — requests are authenticated by the `X-Razorpay-Signature` header (HMAC-SHA256 of the raw body).\n\n**Testing from Postman:** set the `RAZORPAY_WEBHOOK_SECRET` collection variable to the server's secret. The pre-request script signs the body automatically. Replace `order_id` and `amount` with a real order from **Recharge Wallet** to credit it.\n\nResponses: `200 {\"status\":\"ok\"}` (processed or ignored), `400 {\"error\":\"invalid_signature\"}`."
+					},
+					"response": [
+						{
+							"name": "Processed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Razorpay-Signature",
+										"value": "{{RAZORPAY_WEBHOOK_SIGNATURE}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"entity\": \"event\",\n  \"event\": \"order.paid\",\n  \"payload\": {\n    \"payment\": {\n      \"entity\": {\n        \"id\": \"pay_QaBcDeFgHiJkLn\",\n        \"order_id\": \"order_QaBcDeFgHiJkLm\",\n        \"amount\": 10000,\n        \"currency\": \"INR\",\n        \"status\": \"captured\"\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}payments/razorpay/webhook",
+									"host": [
+										"{{BASE_URL}}payments"
+									],
+									"path": [
+										"razorpay",
+										"webhook"
+									]
+								},
+								"description": "**Called by Razorpay, not by the app.** Configure in Razorpay Dashboard → Settings → Webhooks:\n\n- URL: `https://<your-domain>/v1/api/payments/razorpay/webhook`\n- Events: `order.paid`, `payment.captured`, `payment.failed`\n- Secret: same as `RAZORPAY_WEBHOOK_SECRET` in the server `.env`\n\nNo token — requests are authenticated by the `X-Razorpay-Signature` header (HMAC-SHA256 of the raw body).\n\n**Testing from Postman:** set the `RAZORPAY_WEBHOOK_SECRET` collection variable to the server's secret. The pre-request script signs the body automatically. Replace `order_id` and `amount` with a real order from **Recharge Wallet** to credit it.\n\nResponses: `200 {\"status\":\"ok\"}` (processed or ignored), `400 {\"error\":\"invalid_signature\"}`."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"ok\"\n}"
+						},
+						{
+							"name": "Bad signature",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Razorpay-Signature",
+										"value": "{{RAZORPAY_WEBHOOK_SIGNATURE}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"entity\": \"event\",\n  \"event\": \"order.paid\",\n  \"payload\": {\n    \"payment\": {\n      \"entity\": {\n        \"id\": \"pay_QaBcDeFgHiJkLn\",\n        \"order_id\": \"order_QaBcDeFgHiJkLm\",\n        \"amount\": 10000,\n        \"currency\": \"INR\",\n        \"status\": \"captured\"\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}payments/razorpay/webhook",
+									"host": [
+										"{{BASE_URL}}payments"
+									],
+									"path": [
+										"razorpay",
+										"webhook"
+									]
+								},
+								"description": "**Called by Razorpay, not by the app.** Configure in Razorpay Dashboard → Settings → Webhooks:\n\n- URL: `https://<your-domain>/v1/api/payments/razorpay/webhook`\n- Events: `order.paid`, `payment.captured`, `payment.failed`\n- Secret: same as `RAZORPAY_WEBHOOK_SECRET` in the server `.env`\n\nNo token — requests are authenticated by the `X-Razorpay-Signature` header (HMAC-SHA256 of the raw body).\n\n**Testing from Postman:** set the `RAZORPAY_WEBHOOK_SECRET` collection variable to the server's secret. The pre-request script signs the body automatically. Replace `order_id` and `amount` with a real order from **Recharge Wallet** to credit it.\n\nResponses: `200 {\"status\":\"ok\"}` (processed or ignored), `400 {\"error\":\"invalid_signature\"}`."
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"invalid_signature\"\n}"
+						}
+					]
+				}
+			]
 		}
 	],
 	"variable": [
@@ -9449,6 +10115,36 @@
 		},
 		{
 			"key": "SOUNDFX_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "TXN_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RAZORPAY_ORDER_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RAZORPAY_PAYMENT_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RAZORPAY_SIGNATURE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RAZORPAY_WEBHOOK_SECRET",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RAZORPAY_WEBHOOK_SIGNATURE",
 			"value": "",
 			"type": "string"
 		}
