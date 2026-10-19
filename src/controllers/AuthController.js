@@ -1,6 +1,7 @@
 const UserService = require("../services/UserService");
 const helpers = require("../util/helpers.js");
 const OtpService = require("../services/OtpService");
+const PasswordResetService = require("../services/PasswordResetService");
 
 // Expected OTP failures → 400 with a friendly message instead of a raw error.
 const OTP_ERRORS = [
@@ -11,6 +12,21 @@ const OTP_ERRORS = [
   "otp_send_failed",
   "otp_service_unavailable",
   "otp_email_not_supported",
+];
+
+// Expected forgot-password failures → 400 with a friendly message.
+const RESET_ERRORS = [
+  "user_not_found",
+  "ac_deactivated",
+  "no_email_on_account",
+  "otp_resend_too_soon",
+  "reset_email_failed",
+  "mail_not_configured",
+  "otp_expired",
+  "otp_too_many_attempts",
+  "incorrect_otp",
+  "password_too_short",
+  "reset_token_invalid",
 ];
 
 module.exports = () => {
@@ -233,41 +249,52 @@ module.exports = () => {
     return next();
   };
 
+  // Forgot password, step 1: email a 6-digit code to the account's email.
   const forgotPassword = async (req, res, next) => {
-    let { userId } = req.body;
+    console.log("AuthController => forgotPassword");
+    const { userId } = req.body;
 
-    let email = null;
-    let mobile = null;
-
-    const query = {};
-
-    if (userId.includes("@")) {
-      email = userId.toLowerCase();
-      query.email = email;
-    } else {
-      mobile = userId;
-      query.mobile = mobile;
-    }
-
-    if (!mobile && !email) {
+    try {
+      req.rData = await PasswordResetService().requestReset(userId);
+      req.msg = "reset_otp_sent";
+    } catch (e) {
+      if (!RESET_ERRORS.includes(e.message)) throw e;
       req.rCode = 0;
-      req.msg = "invalid_user_id";
-      return next();
+      req.msg = e.message;
     }
+    next();
+  };
 
-    let user = await UserService().fetchByQuery(query);
+  // Step 2: check the code; returns a one-time resetToken.
+  const verifyResetOtp = async (req, res, next) => {
+    console.log("AuthController => verifyResetOtp");
+    const { txnId, otp } = req.body;
 
-    if (user) {
-      let otp = helpers().generateOTP();
-
-      req.msg = "success";
-      req.rData = {};
-    } else {
+    try {
+      req.rData = await PasswordResetService().verifyOtp(txnId, otp);
+      req.msg = "reset_otp_verified";
+    } catch (e) {
+      if (!RESET_ERRORS.includes(e.message)) throw e;
       req.rCode = 0;
-      req.msg = "user_not_found";
-      req.rData = {};
+      req.msg = e.message;
     }
+    next();
+  };
 
+  // Step 3: set the new password with the resetToken.
+  const resetPasswordWithToken = async (req, res, next) => {
+    console.log("AuthController => resetPasswordWithToken");
+    const { resetToken, password } = req.body;
+
+    try {
+      await PasswordResetService().setPassword(resetToken, password);
+      req.rData = {};
+      req.msg = "password_changed";
+    } catch (e) {
+      if (!RESET_ERRORS.includes(e.message)) throw e;
+      req.rCode = 0;
+      req.msg = e.message;
+    }
     next();
   };
 
@@ -315,7 +342,7 @@ module.exports = () => {
       if (device_type) data.device_type = device_type;
       if (email) data.email = email;
 
-      let user = await UserService().updateProfile(exists._id, data);
+      let user = await UserService().updateUsers(exists._id, data);
       user = await UserService().fetch(exists._id);
       let token = await helpers().createJWT({ userId: exists._id });
 
@@ -374,6 +401,8 @@ module.exports = () => {
     logout,
     register,
     forgotPassword,
+    verifyResetOtp,
+    resetPasswordWithToken,
     resetPassword,
   };
 };

@@ -6146,13 +6146,13 @@
 							]
 						},
 						{
-							"name": "Forgot password",
+							"name": "Forgot password (Send Email OTP)",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"userId\":\"test1@gmail.com\" //email or mobile\r\n}",
+									"raw": "{\n    \"userId\": \"user@example.com\" //email or mobile\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -6167,17 +6167,18 @@
 									"path": [
 										"forgot-password"
 									]
-								}
+								},
+								"description": "**Step 1 of forgot password.** No login needed. Emails a 6-digit code to the account's email (a mobile number works too if the account has an email). Saves `txnId` into `RESET_TXN_ID`.\n\nResponse: `txnId`, masked `email`, `emailSent`, `expiresIn` (seconds, default 600).\n\n- `emailSent: false` → mail not configured or failed; the master OTP still works while `MASTER_OTP_ENABLED=true`.\n- Errors (400): `user_not_found`, `No email is linked to this account…`, account deactivated, wait 30 seconds between requests."
 							},
 							"response": [
 								{
-									"name": "Forgot password",
+									"name": "Code sent",
 									"originalRequest": {
 										"method": "POST",
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"userId\":\"test1@gmail.com\" //email or mobile\r\n}",
+											"raw": "{\n    \"userId\": \"user@example.com\" //email or mobile\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -6192,47 +6193,295 @@
 											"path": [
 												"forgot-password"
 											]
-										}
+										},
+										"description": "**Step 1 of forgot password.** No login needed. Emails a 6-digit code to the account's email (a mobile number works too if the account has an email). Saves `txnId` into `RESET_TXN_ID`.\n\nResponse: `txnId`, masked `email`, `emailSent`, `expiresIn` (seconds, default 600).\n\n- `emailSent: false` → mail not configured or failed; the master OTP still works while `MASTER_OTP_ENABLED=true`.\n- Errors (400): `user_not_found`, `No email is linked to this account…`, account deactivated, wait 30 seconds between requests."
 									},
 									"status": "OK",
 									"code": 200,
-									"_postman_previewlanguage": null,
+									"_postman_previewlanguage": "json",
 									"header": [
-										{
-											"key": "X-Powered-By",
-											"value": "Express"
-										},
-										{
-											"key": "Access-Control-Allow-Origin",
-											"value": "*"
-										},
 										{
 											"key": "Content-Type",
 											"value": "application/json; charset=utf-8"
-										},
-										{
-											"key": "Content-Length",
-											"value": "40"
-										},
-										{
-											"key": "ETag",
-											"value": "W/\"28-IA5aNBZx8WPOym4aktRlrbIo0ZU\""
-										},
-										{
-											"key": "Date",
-											"value": "Fri, 28 Nov 2025 12:16:25 GMT"
-										},
-										{
-											"key": "Connection",
-											"value": "keep-alive"
-										},
-										{
-											"key": "Keep-Alive",
-											"value": "timeout=5"
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": {}\n}"
+									"body": "{\n    \"code\": 1,\n    \"message\": \"Password reset code sent to your email\",\n    \"data\": {\n        \"txnId\": \"5f0c2b1e-8d4a-4c3b-9e7f-1a2b3c4d5e6f\",\n        \"email\": \"us**@example.com\",\n        \"emailSent\": true,\n        \"expiresIn\": 600\n    }\n}"
+								},
+								{
+									"name": "No email on account",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"userId\": \"user@example.com\" //email or mobile\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}auth/forgot-password",
+											"host": [
+												"{{BASE_URL}}auth"
+											],
+											"path": [
+												"forgot-password"
+											]
+										},
+										"description": "**Step 1 of forgot password.** No login needed. Emails a 6-digit code to the account's email (a mobile number works too if the account has an email). Saves `txnId` into `RESET_TXN_ID`.\n\nResponse: `txnId`, masked `email`, `emailSent`, `expiresIn` (seconds, default 600).\n\n- `emailSent: false` → mail not configured or failed; the master OTP still works while `MASTER_OTP_ENABLED=true`.\n- Errors (400): `user_not_found`, `No email is linked to this account…`, account deactivated, wait 30 seconds between requests."
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 0,\n    \"message\": \"No email is linked to this account, so the reset code can't be sent\",\n    \"data\": {}\n}"
+								}
+							],
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"const res = pm.response.json();",
+											"if (res.data && res.data.txnId) {",
+											"    pm.collectionVariables.set(\"RESET_TXN_ID\", res.data.txnId);",
+											"}"
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "Forgot password - Verify OTP",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"const res = pm.response.json();",
+											"if (res.data && res.data.resetToken) {",
+											"    pm.collectionVariables.set(\"RESET_TOKEN\", res.data.resetToken);",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"txnId\": \"{{RESET_TXN_ID}}\",\n    \"otp\": 123456\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}auth/forgot-password/verify-otp",
+									"host": [
+										"{{BASE_URL}}auth"
+									],
+									"path": [
+										"forgot-password",
+										"verify-otp"
+									]
+								},
+								"description": "**Step 2.** Check the code from the email. Returns a one-time `resetToken` (valid 10 minutes), saved into `RESET_TOKEN`.\n\nErrors (400): incorrect otp, OTP expired (codes are single-use), too many attempts (after 5 wrong tries)."
+							},
+							"response": [
+								{
+									"name": "Verified",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"txnId\": \"{{RESET_TXN_ID}}\",\n    \"otp\": 123456\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}auth/forgot-password/verify-otp",
+											"host": [
+												"{{BASE_URL}}auth"
+											],
+											"path": [
+												"forgot-password",
+												"verify-otp"
+											]
+										},
+										"description": "**Step 2.** Check the code from the email. Returns a one-time `resetToken` (valid 10 minutes), saved into `RESET_TOKEN`.\n\nErrors (400): incorrect otp, OTP expired (codes are single-use), too many attempts (after 5 wrong tries)."
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 1,\n    \"message\": \"Code verified, you can now set a new password\",\n    \"data\": {\n        \"resetToken\": \"3f9a\\u202664 hex chars\\u2026\",\n        \"expiresIn\": 600\n    }\n}"
+								},
+								{
+									"name": "Incorrect OTP",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"txnId\": \"{{RESET_TXN_ID}}\",\n    \"otp\": 123456\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}auth/forgot-password/verify-otp",
+											"host": [
+												"{{BASE_URL}}auth"
+											],
+											"path": [
+												"forgot-password",
+												"verify-otp"
+											]
+										},
+										"description": "**Step 2.** Check the code from the email. Returns a one-time `resetToken` (valid 10 minutes), saved into `RESET_TOKEN`.\n\nErrors (400): incorrect otp, OTP expired (codes are single-use), too many attempts (after 5 wrong tries)."
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 0,\n    \"message\": \"incorrect otp, try again!\",\n    \"data\": {}\n}"
+								}
+							]
+						},
+						{
+							"name": "Forgot password - Set New Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"resetToken\": \"{{RESET_TOKEN}}\",\n    \"password\": \"NewPass@123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}auth/forgot-password/reset",
+									"host": [
+										"{{BASE_URL}}auth"
+									],
+									"path": [
+										"forgot-password",
+										"reset"
+									]
+								},
+								"description": "**Step 3.** Set the new password (min 6 characters). The `resetToken` works once. After this, log in with **Login** (`viaPassword: true`)."
+							},
+							"response": [
+								{
+									"name": "Password changed",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"resetToken\": \"{{RESET_TOKEN}}\",\n    \"password\": \"NewPass@123\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}auth/forgot-password/reset",
+											"host": [
+												"{{BASE_URL}}auth"
+											],
+											"path": [
+												"forgot-password",
+												"reset"
+											]
+										},
+										"description": "**Step 3.** Set the new password (min 6 characters). The `resetToken` works once. After this, log in with **Login** (`viaPassword: true`)."
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 1,\n    \"message\": \"Password updated successfully. Please login with new password!\",\n    \"data\": {}\n}"
+								},
+								{
+									"name": "Token expired / used",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"resetToken\": \"{{RESET_TOKEN}}\",\n    \"password\": \"NewPass@123\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}auth/forgot-password/reset",
+											"host": [
+												"{{BASE_URL}}auth"
+											],
+											"path": [
+												"forgot-password",
+												"reset"
+											]
+										},
+										"description": "**Step 3.** Set the new password (min 6 characters). The `resetToken` works once. After this, log in with **Login** (`viaPassword: true`)."
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 0,\n    \"message\": \"Reset link has expired, please request a new code\",\n    \"data\": {}\n}"
 								}
 							]
 						},
@@ -10145,6 +10394,16 @@
 		},
 		{
 			"key": "RAZORPAY_WEBHOOK_SIGNATURE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RESET_TXN_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RESET_TOKEN",
 			"value": "",
 			"type": "string"
 		}

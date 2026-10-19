@@ -145,6 +145,19 @@ async function cleanup() {
 
 async function main() {
   console.log(c.bold(c.cyan("\n=== E2E test (with seeded data) ===\n")));
+
+  // Fail fast before seeding anything if the API server isn't up.
+  try {
+    await request("GET", "/public/logos");
+  } catch (e) {
+    console.error(
+      c.red(
+        `Server is not running on port ${PORT}. Start it in another terminal with \`npm start\`, then run this again.`,
+      ),
+    );
+    process.exit(2);
+  }
+
   await mongoose.connect(process.env.LOCAL_MONGO_DB);
 
   const User = require("../src/models/User");

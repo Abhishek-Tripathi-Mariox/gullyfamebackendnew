@@ -45,6 +45,15 @@ module.exports = () => {
     validate(v, res, next, req);
   };
 
+  const validateForgotPasswordReset = async (req, res, next) => {
+    const v = new Validator(req.body, {
+      resetToken: validations.general.requiredString,
+      password: validations.general.requiredString,
+    });
+
+    validate(v, res, next, req);
+  };
+
   const validateOtp = async (req, res, next) => {
     const v = new Validator(req.body, {
       // mobileNumber: validations.user.existsmobile,
@@ -161,5 +170,6 @@ module.exports = () => {
     validatePostUserType,
     validateEmailLogin,
     validateUserRegister,
+    validateForgotPasswordReset,
   };
 };

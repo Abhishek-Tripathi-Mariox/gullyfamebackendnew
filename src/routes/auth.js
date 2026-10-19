@@ -49,6 +49,26 @@ authRouter.post(
   ResponseMiddleware
 );
 
+/**
+ * Forgot password (no login needed):
+ *   1. POST /forgot-password             { userId }            → emails a code, returns txnId
+ *   2. POST /forgot-password/verify-otp  { txnId, otp }        → returns resetToken
+ *   3. POST /forgot-password/reset       { resetToken, password }
+ */
+authRouter.post(
+  "/forgot-password/verify-otp",
+  AuthValidator().validateOtp,
+  ErrorHandlerMiddleware(AuthController().verifyResetOtp),
+  ResponseMiddleware
+);
+
+authRouter.post(
+  "/forgot-password/reset",
+  AuthValidator().validateForgotPasswordReset,
+  ErrorHandlerMiddleware(AuthController().resetPasswordWithToken),
+  ResponseMiddleware
+);
+
 // authRouter.put(
 //   "/updateDeviceToken",
 //   AuthMiddleware().verifyUserToken,
