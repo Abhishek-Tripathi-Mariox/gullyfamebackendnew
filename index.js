@@ -3,7 +3,15 @@ const http = require("http");
 require("dotenv").config();
 const PORT = process.env.PORT || 9110;
 const app = express();
-app.use(express.json());
+// Keep the raw bytes around — Razorpay webhook signatures are computed over
+// the exact request body, which re-serialising req.body wouldn't reproduce.
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  }),
+);
 
 // ✅ Log all incoming requests
 app.use((req, res, next) => {

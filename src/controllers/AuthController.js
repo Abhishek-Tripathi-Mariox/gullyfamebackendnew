@@ -1,9 +1,32 @@
 const UserService = require("../services/UserService");
 const helpers = require("../util/helpers.js");
-const redis = require("../util/redis.js");
-const { v4: uuidv4 } = require("uuid");
+const OtpService = require("../services/OtpService");
+
+// Expected OTP failures → 400 with a friendly message instead of a raw error.
+const OTP_ERRORS = [
+  "incorrect_otp",
+  "otp_expired",
+  "otp_too_many_attempts",
+  "otp_resend_too_soon",
+  "otp_send_failed",
+  "otp_service_unavailable",
+  "otp_email_not_supported",
+];
 
 module.exports = () => {
+  // Returns { txnId, smsSent, expiresIn }, or null after setting an error
+  // response on req.
+  const sendOtpOrFail = async (req, data) => {
+    try {
+      return await OtpService().issueOtp(data);
+    } catch (e) {
+      if (!OTP_ERRORS.includes(e.message)) throw e;
+      req.rCode = 0;
+      req.msg = e.message;
+      return null;
+    }
+  };
+
   const register = async (req, res, next) => {
     console.log("AuthController => register");
 
@@ -123,84 +146,64 @@ module.exports = () => {
 
     const user = await UserService().fetchByQuery(query);
 
-    // Generate OTP & txnId
-    const otp = helpers().generateOTP();
-    const txnId = uuidv4();
-    const key = `USER_Mob_${mobile}`;
-
-    const otpData = {
-      txnId,
+    const sent = await sendOtpOrFail(req, {
       mobile,
       email,
-      otp,
-      reason: "OTP LOGIN",
-      is_active: 1,
       countryCode,
-      date_created: new Date(),
-      date_modified: new Date(),
-    };
+      reason: "OTP LOGIN",
+    });
+    if (!sent) return next();
 
-    // Save OTP in Redis
-    await UserService().setUserInRedisByTxnId(otpData);
-    await UserService().setUserInRedisForReg(mobile, otpData, () => {});
-
-    // Response
     req.msg = "otp_sent";
-
-    if (user) {
-      req.rData = { userRegister: true, txnId };
-    } else {
-      req.rData = { userRegister: false, txnId };
-    }
+    req.rData = { userRegister: Boolean(user), ...sent };
 
     return next();
   };
 
   const verifyOtp = async (req, res, next) => {
     console.log("AuthController => verifyOtpForLogin");
-    let { otp, txnId } = req.body;
+    const { otp, txnId } = req.body;
 
-    let otpUser = 123456;
-
-    const key = `USER|txnId:${txnId}`;
-    const redisResult = await redis().GetKeys(key);
-
-    if (redisResult && redisResult.length > 0) {
-      const result = await redis().GetRedis(redisResult);
-
-      if (result && result.length > 0 && result[0]) {
-        const otpData = JSON.parse(result[0]);
-        otpUser = otpData.otp;
-        mobile = otpData.mobile;
-        email = otpData.email;
-        let verify = otp == otpUser || 123456 ? true : false;
-
-        if (verify) {
-          let user;
-          if (mobile) user = await UserService().fetchByQuery({ mobile });
-          if (email) user = await UserService().fetchByQuery({ email });
-
-          token = await helpers().createJWT({ userId: user._id });
-
-          req.rData = { token, userId: user._id };
-          req.msg = "otp_verified";
-        } else {
-          req.rCode = 0;
-          req.msg = "incorrect_otp";
-        }
-      }
-    } else {
+    let otpData;
+    try {
+      otpData = await OtpService().verifyOtp(txnId, otp);
+    } catch (e) {
+      if (!OTP_ERRORS.includes(e.message)) throw e;
       req.rCode = 0;
-      req.msg = "incorrect_otp";
+      req.msg = e.message;
+      return next();
     }
 
+    const { mobile, email } = otpData;
+    let user = await UserService().fetchByQuery(email ? { email } : { mobile });
+
+    // First OTP login for this number/email — create the account.
+    let isNewUser = false;
+    if (!user) {
+      user = await UserService().addUsers({
+        ...(mobile ? { mobile } : {}),
+        ...(email ? { email } : {}),
+      });
+      isNewUser = true;
+    }
+
+    if (!user.isActive) {
+      req.rCode = 0;
+      req.msg = "ac_deactivated";
+      return next();
+    }
+
+    const token = await helpers().createJWT({ userId: user._id });
+
+    req.rData = { token, userId: user._id, isNewUser };
+    req.msg = "otp_verified";
     next();
   };
 
   const resendOtp = async (req, res, next) => {
     console.log("AuthController => resendOtp");
 
-    let { userId } = req.body;
+    let { userId, countryCode } = req.body;
 
     let email = null;
     let mobile = null;
@@ -217,33 +220,16 @@ module.exports = () => {
       return next();
     }
 
-    // Generate new OTP + new TxnId
-    const otp = helpers().generateOTP();
-    const txnId = uuidv4();
-
-    const otpData = {
-      txnId,
-      otp,
+    const sent = await sendOtpOrFail(req, {
       mobile,
       email,
+      countryCode,
       reason: "OTP RESEND",
-      date_created: new Date(),
-      date_modified: new Date(),
-    };
-
-    // Save latest using mobile/email
-    if (mobile) {
-      await UserService().setUserInRedisForReg(mobile, otpData, () => {});
-    }
-    if (email) {
-      await UserService().setUserInRedisForReg(email, otpData, () => {});
-    }
-
-    // Save by txnId
-    await UserService().setUserInRedisByTxnId(otpData);
+    });
+    if (!sent) return next();
 
     req.msg = "otp_resent";
-    req.rData = { txnId };
+    req.rData = sent;
     return next();
   };
 

@@ -1,4 +1,5 @@
 const WalletService = require("../services/WalletService");
+const PaymentService = require("../services/PaymentService");
 const Reel = require("../models/Reel");
 
 module.exports = () => {
@@ -21,9 +22,12 @@ module.exports = () => {
     next();
   };
 
+  // Step 1 of a recharge: create a Razorpay order. The wallet is credited only
+  // after the payment is verified (verifyRecharge) or the webhook confirms it.
   const recharge = async (req, res, next) => {
     console.log("WalletController => recharge");
-    const { userId, amount } = req.body;
+    const { userId } = req.body;
+    const amount = Number(req.body.amount);
 
     if (!amount || amount <= 0) {
       req.rCode = 0;
@@ -31,15 +35,39 @@ module.exports = () => {
       return next();
     }
 
-    // Placeholder for where a real payment gateway's success webhook will
-    // eventually call this same credit path once one is integrated.
-    const wallet = await WalletService().credit(userId, amount, {
-      type: "RECHARGE",
-      note: "Wallet recharge",
-    });
+    req.rData = await PaymentService().createRechargeOrder(userId, amount);
+    req.msg = "payment_order_created";
+    next();
+  };
 
-    req.rData = { balance: wallet.balance };
+  // Step 2: the app sends back what Razorpay Checkout returned on success.
+  const verifyRecharge = async (req, res, next) => {
+    console.log("WalletController => verifyRecharge");
+    const {
+      userId,
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    } = req.body;
+
+    req.rData = await PaymentService().verifyRecharge(userId, {
+      orderId: razorpay_order_id,
+      paymentId: razorpay_payment_id,
+      signature: razorpay_signature,
+    });
     req.msg = "wallet_recharged";
+    next();
+  };
+
+  const rechargeStatus = async (req, res, next) => {
+    console.log("WalletController => rechargeStatus");
+    const { userId } = req.body;
+
+    req.rData = await PaymentService().getOrderStatus(
+      userId,
+      req.params.orderId,
+    );
+    req.msg = "success";
     next();
   };
 
@@ -73,5 +101,5 @@ module.exports = () => {
     next();
   };
 
-  return { getWallet, recharge, tipCreator };
+  return { getWallet, recharge, verifyRecharge, rechargeStatus, tipCreator };
 };

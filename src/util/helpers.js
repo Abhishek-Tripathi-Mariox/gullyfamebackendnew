@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const JWTSECRET = process.env.JWTSECRET;
@@ -42,11 +43,11 @@ module.exports = function () {
     return hash;
   };
 
+  // Real random code — the master OTP is accepted separately at verify time
+  // (see OtpService) while MASTER_OTP_ENABLED is true.
   const generateOTP = (length = 6) => {
-    // return "123456";
-    return process.env.MASTER_OTP_LOGIN;
-
-    // return 100000 + Math.floor(Math.random() * 900000);
+    const min = 10 ** (length - 1);
+    return String(crypto.randomInt(min, min * 10));
   };
 
   const checkPassword = async (password, hash) => {

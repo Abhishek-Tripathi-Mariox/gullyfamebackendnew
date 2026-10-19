@@ -116,6 +116,9 @@ async function seed(user) {
     author: user._id,
     competition: comp._id,
     stats: { votes: 42, likes: 10, comments: 0, shares: 0, saves: 0, tips: 0 },
+    // Reels default to "draft", which the listing hides.
+    status: "published",
+    publishedAt: new Date(),
     isActive: true,
     isDeleted: false,
   });
@@ -124,6 +127,8 @@ async function seed(user) {
     caption: `${TAG} reel-2`,
     author: user._id,
     stats: { votes: 7, likes: 1, comments: 0, shares: 0, saves: 0, tips: 0 },
+    status: "published",
+    publishedAt: new Date(),
     isActive: true,
     isDeleted: false,
   });
@@ -261,7 +266,7 @@ async function main() {
         typeof seededReel.stats.votes === "number" &&
         seededReel.user_interactions &&
         typeof seededReel.user_interactions.has_voted === "boolean",
-      JSON.stringify(seededReel).slice(0, 400),
+      String(JSON.stringify(seededReel)).slice(0, 400),
     );
     assert(
       "reels: votes count surfaces from DB",

@@ -142,7 +142,10 @@ userRouter.post(
 );
 
 /**
- * Wallet
+ * Wallet — recharge goes through Razorpay:
+ *   1. POST /wallet/recharge         → creates a Razorpay order
+ *   2. App opens Razorpay Checkout with the returned keyId/orderId
+ *   3. POST /wallet/recharge/verify  → verifies signature and credits wallet
  */
 userRouter.get(
   "/wallet",
@@ -155,6 +158,20 @@ userRouter.post(
   "/wallet/recharge",
   AuthMiddleware().verifyUserToken,
   ErrorHandlerMiddleware(WalletController().recharge),
+  ResponseMiddleware,
+);
+
+userRouter.post(
+  "/wallet/recharge/verify",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(WalletController().verifyRecharge),
+  ResponseMiddleware,
+);
+
+userRouter.get(
+  "/wallet/recharge/:orderId",
+  AuthMiddleware().verifyUserToken,
+  ErrorHandlerMiddleware(WalletController().rechargeStatus),
   ResponseMiddleware,
 );
 

@@ -71,10 +71,50 @@ module.exports = () => {
     return reply ? Promise.resolve(reply) : Promise.resolve([]);
   };
 
+  const DelRedis = async (key) => {
+    console.log("Redis=> DelRedis");
+    if (!client.isOpen) {
+      throw new Error("Redis client is not connected");
+    }
+
+    return client.del(key);
+  };
+
+  // Increments a counter, starting its expiry on the first hit.
+  const IncrRedis = async (key, expireTime) => {
+    console.log("Redis=> IncrRedis");
+    if (!client.isOpen) {
+      throw new Error("Redis client is not connected");
+    }
+
+    const count = await client.incr(key);
+    if (count === 1 && expireTime) {
+      await client.expire(key, expireTime);
+    }
+    return count;
+  };
+
+  // Sets the key only if it doesn't exist. Returns true when it was set.
+  const SetNxRedis = async (key, val, expireTime) => {
+    console.log("Redis=> SetNxRedis");
+    if (!client.isOpen) {
+      throw new Error("Redis client is not connected");
+    }
+
+    const reply = await client.set(key, JSON.stringify(val), {
+      NX: true,
+      ...(expireTime ? { EX: expireTime } : {}),
+    });
+    return reply === "OK";
+  };
+
   return {
     SetRedis,
     GetKeys,
     GetKeyRedis,
     GetRedis,
+    DelRedis,
+    IncrRedis,
+    SetNxRedis,
   };
 };
